@@ -1,73 +1,48 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Volt & Glove" />
-  <meta name="theme-color" content="#06080d" />
-  <title>VOLT &amp; GLOVE // Apex Protocols</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>VOLT & GLOVE // Apex Protocols</title>
   
-  <!-- Inline Dynamic Manifest for Native Mobile Installation (Add to Home Screen) -->
-  <link rel="manifest" id="manifest-placeholder" />
+  <!-- PWA Metadata -->
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Volt & Glove">
+  
+  <!-- App Icon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23030712'/><path d='M54 12 L24 54 L48 54 L38 88 L76 44 L52 44 Z' fill='%2338bdf8' stroke='%23f59e0b' stroke-width='4' stroke-linejoin='round'/></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23030712'/><path d='M54 12 L24 54 L48 54 L38 88 L76 44 L52 44 Z' fill='%2338bdf8' stroke='%23f59e0b' stroke-width='4' stroke-linejoin='round'/></svg>">
 
-  <!-- Tailwind CSS CDN -->
+  <!-- Fonts & Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Phosphor Icons CDN -->
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  
-  <!-- Canvas Confetti CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-  <!-- Google Fonts: Chakra Petch, Rajdhani & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,700&family=JetBrains+Mono:wght@400;600;800&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,700&family=JetBrains+Mono:wght@400;600;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: {
-            tactical: ['"Chakra Petch"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-            hud: ['Rajdhani', 'sans-serif'],
-          },
           colors: {
-            zinc: {
-              950: '#06080d',
-              900: '#0b101b',
-              850: '#101726',
-              800: '#172033',
-              700: '#23304c',
-              600: '#384b6f',
-            },
-            volt: {
-              300: '#67e8f9',
-              400: '#22d3ee',
-              500: '#06b6d4',
-              glow: '#00f0ff'
-            },
-            hazard: {
-              400: '#fbbf24',
-              500: '#f59e0b',
-              600: '#d97706',
-              glow: '#ffb703'
-            },
-            combat: {
-              400: '#f87171',
-              500: '#ef4444',
-              600: '#dc2626',
-              glow: '#ff2a2a'
+            tactical: {
+              bg: '#030712',
+              card: '#090d1a',
+              cardborder: '#172238',
+              cyan: '#38bdf8',
+              amber: '#f59e0b',
+              red: '#f43f5e',
+              emerald: '#10b981',
+              dim: '#64748b'
             }
           },
-          boxShadow: {
-            'volt-glow': '0 0 20px -3px rgba(6, 182, 212, 0.45)',
-            'hazard-glow': '0 0 20px -3px rgba(245, 158, 11, 0.45)',
-            'combat-glow': '0 0 20px -3px rgba(239, 68, 68, 0.45)',
+          fontFamily: {
+            heading: ['Chakra Petch', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            sans: ['Rajdhani', 'sans-serif']
           }
         }
       }
@@ -75,1880 +50,885 @@
   </script>
 
   <style>
-    /* Support iPhone Safe Area Insets (Notch & Home Indicator) */
-    :root {
-      --sat: env(safe-area-inset-top, 0px);
-      --sab: env(safe-area-inset-bottom, 0px);
-    }
-
     body {
-      padding-top: var(--sat);
-      padding-bottom: var(--sab);
-      background-color: #06080d;
-      background-image: 
-        radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.12) 0%, transparent 60%),
-        radial-gradient(circle at 10% 40%, rgba(245, 158, 11, 0.06) 0%, transparent 40%),
-        radial-gradient(circle at 90% 70%, rgba(239, 68, 68, 0.08) 0%, transparent 40%),
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
-      background-attachment: fixed;
-      user-select: none;
+      background-color: #030712;
+      color: #e2e8f0;
+      font-family: 'Rajdhani', sans-serif;
       -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      padding-bottom: env(safe-area-inset-bottom, 20px);
     }
-
-    .cyber-panel {
-      background: rgba(11, 16, 27, 0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(35, 48, 76, 0.9);
+    .grid-bg {
+      background-image: linear-gradient(to right, rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .hud-box {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(3, 7, 18, 0.95) 100%);
+      border: 1px solid #1e293b;
       position: relative;
     }
-    .cyber-panel::before {
+    .hud-box::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 7px;
-      height: 7px;
-      border-top: 2px solid #00f0ff;
-      border-left: 2px solid #00f0ff;
-      pointer-events: none;
+      top: -1px; left: -1px;
+      width: 8px; height: 8px;
+      border-top: 2px solid #38bdf8;
+      border-left: 2px solid #38bdf8;
     }
-    .cyber-panel::after {
+    .hud-box::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 7px;
-      height: 7px;
+      bottom: -1px; right: -1px;
+      width: 8px; height: 8px;
       border-bottom: 2px solid #f59e0b;
       border-right: 2px solid #f59e0b;
-      pointer-events: none;
     }
-
-    /* Scrollbars */
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: #06080d; }
-    ::-webkit-scrollbar-thumb { background: #23304c; border-radius: 2px; }
-    ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.02); }
+    }
+    .pulse-glow { animation: pulse-slow 3s infinite ease-in-out; }
   </style>
 </head>
-<body class="text-slate-200 min-h-screen font-tactical antialiased flex flex-col justify-between selection:bg-volt-glow selection:text-black">
+<body class="grid-bg min-h-screen">
 
-  <!-- HUD TOP BAR -->
-  <header class="border-b border-zinc-800/90 bg-zinc-950/85 sticky top-0 z-40 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-2">
-      
-      <!-- Brand Identity -->
-      <div class="flex items-center gap-2.5">
-        <div class="relative flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-900 border border-volt-400/50 shadow-volt-glow flex-shrink-0">
-          <i class="ph-bold ph-lightning text-volt-glow text-xl"></i>
-          <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-hazard-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-hazard-500"></span>
+  <div class="max-w-md mx-auto px-4 py-4 space-y-4">
+
+    <!-- Top Command Header -->
+    <header class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-lg bg-slate-900 border border-tactical-cyan/40 flex items-center justify-center text-tactical-cyan shadow-sm shadow-tactical-cyan/20">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div>
+          <div class="flex items-center space-x-1.5">
+            <span class="font-heading font-bold text-sm tracking-widest text-slate-100">VOLT & GLOVE</span>
+            <span class="text-[9px] font-mono px-1.5 py-0.2 bg-tactical-cyan/10 text-tactical-cyan border border-tactical-cyan/30 rounded">v2.0</span>
+          </div>
+          <p class="text-[10px] font-mono text-tactical-dim uppercase tracking-wider">Apex Routine Operator</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <button id="soundToggle" onclick="toggleAudio()" class="p-2 rounded bg-slate-900 border border-slate-800 text-slate-400 hover:text-tactical-cyan transition">
+          <svg id="soundIcon" class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+        </button>
+        <button onclick="toggleModal('timerModal')" class="px-2.5 py-1.5 rounded bg-tactical-amber/10 border border-tactical-amber/30 text-tactical-amber font-mono text-xs flex items-center space-x-1 hover:bg-tactical-amber/20 transition">
+          <span>⏱ ROUNDS</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Character / Operator Rank Card -->
+    <section class="hud-box rounded-xl p-4 shadow-lg shadow-black/60">
+      <div class="flex justify-between items-start mb-2">
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-[10px] font-mono text-tactical-amber uppercase tracking-wider">// OPERATOR DOSSIER</span>
+            <span id="streakMultiplier" class="text-[10px] font-mono bg-tactical-amber/20 text-tactical-amber px-1.5 py-0.5 rounded border border-tactical-amber/40">1.00x XP</span>
+          </div>
+          <h1 id="operatorTitle" class="text-xl font-heading font-bold tracking-wide text-white uppercase mt-0.5">Apprentice Sparrer</h1>
+          <p id="rankSubtitle" class="text-xs text-slate-400 font-sans tracking-wide">Conduit Bending & Pocket Counters</p>
+        </div>
+        <div class="text-right">
+          <div class="inline-flex flex-col items-center justify-center w-12 h-12 rounded-xl bg-slate-900 border border-tactical-cyan text-tactical-cyan shadow-sm shadow-tactical-cyan/40">
+            <span class="text-[9px] font-mono tracking-tighter uppercase text-slate-400 -mb-1">LVL</span>
+            <span id="currentLevel" class="text-xl font-heading font-black">1</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- XP Bar -->
+      <div class="mt-3 space-y-1">
+        <div class="flex justify-between text-[11px] font-mono">
+          <span class="text-tactical-cyan flex items-center space-x-1">
+            <span class="inline-block w-1.5 h-1.5 bg-tactical-cyan rounded-full animate-ping"></span>
+            <span>XP PROGRESSION</span>
           </span>
+          <span id="xpNumbers" class="text-slate-300">35 / 150 XP</span>
         </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="font-bold text-base sm:text-lg tracking-wider text-white uppercase font-hud">VOLT <span class="text-volt-300">&amp;</span> GLOVE</span>
-            <span class="px-1.5 py-0.2 rounded text-[9px] font-mono tracking-widest uppercase bg-hazard-500/20 text-hazard-400 border border-hazard-500/40">PWA READY</span>
-          </div>
-          <div class="text-[10px] sm:text-[11px] text-slate-400 font-mono truncate">
-            ELECTRICIAN // BOXER APEX PROTOCOL
-          </div>
+        <div class="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden p-0.5 border border-slate-800">
+          <div id="xpBarFill" class="bg-gradient-to-r from-tactical-cyan to-tactical-amber h-full rounded-full transition-all duration-500" style="width: 25%"></div>
         </div>
       </div>
 
-      <!-- Action Cluster -->
-      <div class="flex items-center gap-1.5 sm:gap-2">
-        <button id="audio-toggle-btn" class="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 hover:border-volt-400 text-xs font-mono text-slate-300">
-          <i id="audio-icon" class="ph-bold ph-speaker-high text-volt-400 text-sm"></i>
-          <span id="audio-label" class="hidden md:inline">SFX</span>
-        </button>
-
-        <button id="open-phone-modal-btn" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-cyan-950/60 border border-cyan-500/50 hover:bg-cyan-900 text-volt-300 text-xs font-mono uppercase tracking-wider">
-          <i class="ph-bold ph-device-mobile"></i>
-          <span class="hidden sm:inline">Phone Setup</span>
-        </button>
-
-        <button id="open-punchclock-btn" class="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-lg bg-hazard-500/20 border border-hazard-500/60 hover:bg-hazard-500 hover:text-black text-hazard-400 text-xs font-bold uppercase tracking-wider transition active:scale-95 shadow-hazard-glow">
-          <i class="ph-bold ph-timer text-sm"></i>
-          <span class="hidden sm:inline">Timer &amp; Clock</span>
-          <span class="sm:hidden">Clock</span>
-        </button>
-
-        <button id="new-quest-modal-btn" class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-gradient-to-r from-volt-500 to-cyan-500 hover:from-volt-400 hover:to-cyan-400 text-zinc-950 text-xs font-bold uppercase tracking-wider transition active:scale-95 shadow-volt-glow">
-          <i class="ph-bold ph-plus text-sm"></i>
-          <span>Quest</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- MAIN VIEWPORT -->
-  <main class="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-5 w-full flex-grow space-y-5">
-
-    <!-- CHARACTER STATUS / LEVEL CARD -->
-    <section class="cyber-panel rounded-xl p-4 sm:p-5 shadow-2xl">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
-        
-        <!-- Left: Leveling Engine & Titles -->
-        <div class="lg:col-span-5 space-y-3">
-          <div class="flex items-start justify-between">
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-mono tracking-widest text-hazard-400 uppercase">// APEX OPERATOR</span>
-                <span id="streak-multiplier-badge" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-hazard-500/20 text-hazard-400 border border-hazard-500/50">1.0x XP</span>
-              </div>
-              <h2 id="character-title" class="text-2xl sm:text-3xl font-hud font-extrabold text-white tracking-wide uppercase drop-shadow">
-                Apprentice Sparrer
-              </h2>
-              <p id="character-subtitle" class="text-xs text-slate-400 font-mono">
-                Level <span id="char-level-badge" class="text-volt-300 font-bold">1</span> &bull; Conduit Bending &amp; Pocket Countering
-              </p>
-            </div>
-            
-            <!-- Hex Level Icon -->
-            <div class="flex flex-col items-center justify-center w-14 h-14 rounded-xl bg-zinc-900 border-2 border-volt-400 text-volt-300 shadow-volt-glow font-hud font-black text-2xl flex-shrink-0">
-              <span id="char-level">1</span>
-              <span class="text-[9px] font-mono -mt-1 text-slate-400 tracking-tighter">LVL</span>
-            </div>
-          </div>
-
-          <!-- XP Gauge -->
-          <div class="space-y-1.5 pt-1">
-            <div class="flex items-center justify-between text-xs font-mono">
-              <span class="text-slate-400 flex items-center gap-1.5">
-                <i class="ph-bold ph-lightning text-volt-400"></i> XP PROGRESSION
-              </span>
-              <span class="text-volt-300 font-bold"><span id="char-xp-cur">0</span> / <span id="char-xp-next">180</span> XP</span>
-            </div>
-            <div class="h-3 w-full bg-zinc-950 rounded-full border border-zinc-700/80 overflow-hidden relative p-0.5">
-              <div id="char-xp-bar" class="h-full bg-gradient-to-r from-volt-500 via-cyan-400 to-volt-300 rounded-full transition-all duration-700 w-0"></div>
-            </div>
-          </div>
-
-          <!-- Summary Metric Pills -->
-          <div class="grid grid-cols-3 gap-2 pt-1 font-mono text-center">
-            <div class="p-2 rounded-lg bg-zinc-950/70 border border-zinc-800">
-              <span class="text-[9px] text-slate-400 block uppercase">Grind Streak</span>
-              <span id="hero-streak-count" class="text-base font-bold text-hazard-400">0 Days</span>
-            </div>
-            <div class="p-2 rounded-lg bg-zinc-950/70 border border-zinc-800">
-              <span class="text-[9px] text-slate-400 block uppercase">Hours Logged</span>
-              <span id="hero-hours-count" class="text-base font-bold text-volt-300">0.0h</span>
-            </div>
-            <div class="p-2 rounded-lg bg-zinc-950/70 border border-zinc-800">
-              <span class="text-[9px] text-slate-400 block uppercase">Quests Cleared</span>
-              <span id="hero-quests-count" class="text-base font-bold text-combat-400">0</span>
-            </div>
-          </div>
+      <!-- 3 Key Metric Tiles -->
+      <div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-800/80 text-center font-mono">
+        <div class="bg-slate-950/60 p-2 rounded border border-slate-800">
+          <span class="text-[9px] text-tactical-dim block uppercase">Grind Streak</span>
+          <span id="statStreak" class="text-base font-bold text-tactical-amber">0 Days</span>
         </div>
-
-        <!-- Right: 4 Core Attributes Matrix -->
-        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
-          
-          <!-- Attribute 1: Strength & Conditioning -->
-          <div class="p-3 rounded-lg bg-zinc-950/60 border border-combat-600/40 hover:border-combat-500 transition space-y-1.5">
-            <div class="flex items-center justify-between text-xs">
-              <div class="flex items-center gap-1.5 text-combat-400 font-bold uppercase tracking-wider">
-                <i class="ph-bold ph-boxing-glove text-base"></i>
-                <span>Strength &amp; Boxing</span>
-              </div>
-              <span class="font-mono text-xs text-white">Tier <span id="stat-lvl-str" class="font-bold text-combat-400">1</span></span>
-            </div>
-            <div class="h-2 w-full bg-zinc-900 rounded-full overflow-hidden border border-zinc-800">
-              <div id="stat-bar-str" class="h-full bg-gradient-to-r from-combat-600 to-combat-400 transition-all duration-500 w-0"></div>
-            </div>
-            <div class="flex justify-between text-[10px] font-mono text-slate-400">
-              <span>Bag work &bull; Sparring &bull; Sprints</span>
-              <span id="stat-pts-str">0 XP</span>
-            </div>
-          </div>
-
-          <!-- Attribute 2: Craft & Engineering -->
-          <div class="p-3 rounded-lg bg-zinc-950/60 border border-volt-600/40 hover:border-volt-400 transition space-y-1.5">
-            <div class="flex items-center justify-between text-xs">
-              <div class="flex items-center gap-1.5 text-volt-300 font-bold uppercase tracking-wider">
-                <i class="ph-bold ph-wrench text-base"></i>
-                <span>Trade &amp; Engineering</span>
-              </div>
-              <span class="font-mono text-xs text-white">Tier <span id="stat-lvl-craft" class="font-bold text-volt-300">1</span></span>
-            </div>
-            <div class="h-2 w-full bg-zinc-900 rounded-full overflow-hidden border border-zinc-800">
-              <div id="stat-bar-craft" class="h-full bg-gradient-to-r from-cyan-600 to-volt-400 transition-all duration-500 w-0"></div>
-            </div>
-            <div class="flex justify-between text-[10px] font-mono text-slate-400">
-              <span>Code study &bull; Panel wiring &bull; Conduit</span>
-              <span id="stat-pts-craft">0 XP</span>
-            </div>
-          </div>
-
-          <!-- Attribute 3: Discipline & Recovery -->
-          <div class="p-3 rounded-lg bg-zinc-950/60 border border-emerald-600/40 hover:border-emerald-400 transition space-y-1.5">
-            <div class="flex items-center justify-between text-xs">
-              <div class="flex items-center gap-1.5 text-emerald-400 font-bold uppercase tracking-wider">
-                <i class="ph-bold ph-shield-check text-base"></i>
-                <span>Discipline &amp; Fuel</span>
-              </div>
-              <span class="font-mono text-xs text-white">Tier <span id="stat-lvl-recov" class="font-bold text-emerald-400">1</span></span>
-            </div>
-            <div class="h-2 w-full bg-zinc-900 rounded-full overflow-hidden border border-zinc-800">
-              <div id="stat-bar-recov" class="h-full bg-gradient-to-r from-emerald-700 to-emerald-400 transition-all duration-500 w-0"></div>
-            </div>
-            <div class="flex justify-between text-[10px] font-mono text-slate-400">
-              <span>8h Sleep &bull; Hydration &bull; Mobility</span>
-              <span id="stat-pts-recov">0 XP</span>
-            </div>
-          </div>
-
-          <!-- Attribute 4: Iron Mind -->
-          <div class="p-3 rounded-lg bg-zinc-950/60 border border-hazard-600/40 hover:border-hazard-400 transition space-y-1.5">
-            <div class="flex items-center justify-between text-xs">
-              <div class="flex items-center gap-1.5 text-hazard-400 font-bold uppercase tracking-wider">
-                <i class="ph-bold ph-brain text-base"></i>
-                <span>Iron Mind &amp; Strategy</span>
-              </div>
-              <span class="font-mono text-xs text-white">Tier <span id="stat-lvl-mind" class="font-bold text-hazard-400">1</span></span>
-            </div>
-            <div class="h-2 w-full bg-zinc-900 rounded-full overflow-hidden border border-zinc-800">
-              <div id="stat-bar-mind" class="h-full bg-gradient-to-r from-amber-600 to-hazard-400 transition-all duration-500 w-0"></div>
-            </div>
-            <div class="flex justify-between text-[10px] font-mono text-slate-400">
-              <span>Tape review &bull; Blueprint study &bull; Focus</span>
-              <span id="stat-pts-mind">0 XP</span>
-            </div>
-          </div>
-
+        <div class="bg-slate-950/60 p-2 rounded border border-slate-800">
+          <span class="text-[9px] text-tactical-dim block uppercase">Time Logged</span>
+          <span id="statHours" class="text-base font-bold text-tactical-cyan">0.0h</span>
+        </div>
+        <div class="bg-slate-950/60 p-2 rounded border border-slate-800">
+          <span class="text-[9px] text-tactical-dim block uppercase">Tasks Done</span>
+          <span id="statTasks" class="text-base font-bold text-slate-200">0</span>
         </div>
       </div>
     </section>
 
-    <!-- OPERATIONAL CALENDAR & TIME ACCOUNTING -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-      
-      <!-- Calendar Navigator (Col 7) -->
-      <div class="lg:col-span-7 cyber-panel rounded-xl p-4 flex flex-col justify-between">
-        <div class="flex items-center justify-between mb-3">
-          <div>
-            <span class="text-[9px] font-mono uppercase tracking-widest text-slate-400">ACTIVE TIMEFRAME</span>
-            <h3 id="current-day-heading" class="text-xl sm:text-2xl font-hud font-bold text-white tracking-wide uppercase">
-              Today
-            </h3>
-            <p id="current-day-sub" class="text-xs font-mono text-volt-300"></p>
-          </div>
-          <div class="flex items-center gap-1 font-mono">
-            <button id="day-prev-btn" class="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-volt-400 text-slate-300 transition">
-              <i class="ph-bold ph-caret-left"></i>
-            </button>
-            <button id="day-today-btn" class="px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-volt-400 text-xs text-slate-300 transition uppercase">
-              Today
-            </button>
-            <button id="day-next-btn" class="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-volt-400 text-slate-300 transition">
-              <i class="ph-bold ph-caret-right"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- 7-Day Quick Strip -->
-        <div id="week-strip" class="grid grid-cols-7 gap-1.5 pt-2 border-t border-zinc-800">
-          <!-- Populated by JS -->
-        </div>
-      </div>
-
-      <!-- Weekly Time Accounting (Col 5) -->
-      <div class="lg:col-span-5 cyber-panel rounded-xl p-4 flex flex-col justify-between">
-        <div class="flex items-center justify-between mb-2">
-          <div class="flex items-center gap-2">
-            <i class="ph-bold ph-chart-donut text-hazard-400"></i>
-            <h4 class="text-sm font-hud font-bold text-white uppercase tracking-wider">Weekly Time Accounting</h4>
-          </div>
-          <span id="weekly-total-hours" class="text-xs font-mono font-bold text-hazard-400">0.0h Total (7d)</span>
-        </div>
-
-        <!-- Distribution Bars -->
-        <div class="space-y-2 py-1">
-          <div>
-            <div class="flex justify-between text-[11px] font-mono text-slate-300 mb-0.5">
-              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-sm bg-combat-500"></span> Boxing &amp; Roadwork</span>
-              <span id="time-pct-boxing" class="font-bold">0.0h (0%)</span>
-            </div>
-            <div class="h-2 w-full bg-zinc-900 rounded-full overflow-hidden">
-              <div id="bar-dist-boxing" class="h-full bg-combat-500 transition-all duration-500 w-0"></div>
-            </div>
-          </div>
-
-          <div>
-            <div class="flex justify-between text-[11px] font-mono text-slate-300 mb-0.5">
-              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-sm bg-volt-400"></span> Electrical Tradecraft</span>
-              <span id="time-pct-trade" class="font-bold">0.0h (0%)</span>
-            </div>
-            <div class="h-2 w-full bg-zinc-900 rounded-full overflow-hidden">
-              <div id="bar-dist-trade" class="h-full bg-volt-400 transition-all duration-500 w-0"></div>
-            </div>
-          </div>
-
-          <div>
-            <div class="flex justify-between text-[11px] font-mono text-slate-300 mb-0.5">
-              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-sm bg-emerald-400"></span> Recovery, Mind &amp; Sleep</span>
-              <span id="time-pct-recovery" class="font-bold">0.0h (0%)</span>
-            </div>
-            <div class="h-2 w-full bg-zinc-900 rounded-full overflow-hidden">
-              <div id="bar-dist-recovery" class="h-full bg-emerald-400 transition-all duration-500 w-0"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="pt-2 border-t border-zinc-800 flex items-center justify-between text-[11px] font-mono text-slate-400">
-          <span>Target: 40h Trade + 15h Fight / wk</span>
-          <button onclick="document.getElementById('open-punchclock-btn').click()" class="text-volt-300 hover:text-white transition flex items-center gap-1 font-bold">
-            <span>+ Punch Log</span> <i class="ph-bold ph-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- DAILY PROTOCOL DIRECTIVES / QUESTS -->
-    <section class="space-y-3">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-        <div class="flex items-center gap-2">
-          <i class="ph-bold ph-crosshair text-volt-glow text-lg"></i>
-          <h3 class="text-base font-hud font-bold text-white uppercase tracking-wider">
-            Daily Operational Directives
-          </h3>
-          <span id="quest-completion-pill" class="px-2 py-0.5 rounded text-[11px] font-mono bg-zinc-800 text-slate-300 border border-zinc-700">0/0 CLEARED</span>
-        </div>
-
-        <!-- Filter tabs -->
-        <div id="quest-category-filters" class="flex flex-wrap items-center gap-1 font-mono text-xs">
-          <!-- Populated by JS -->
-        </div>
-      </div>
-
-      <!-- Quests Grid -->
-      <div id="quests-container" class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <!-- Rendered dynamically -->
-      </div>
-    </section>
-
-    <!-- 70-DAY DISCIPLINE MATRIX / HEATMAP -->
-    <section class="cyber-panel rounded-xl p-4 sm:p-5 space-y-4">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800 pb-3">
-        <div>
-          <div class="flex items-center gap-2">
-            <i class="ph-bold ph-grid-four text-hazard-400"></i>
-            <h4 class="text-base font-hud font-bold text-white uppercase tracking-wide">Discipline &amp; Grinding Matrix (70 Days)</h4>
-          </div>
-          <p class="text-xs font-mono text-slate-400">Protocol compliance and time investment heatmap</p>
-        </div>
-
-        <div class="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 self-start sm:self-auto">
-          <span>Rest</span>
-          <span class="w-3 h-3 rounded-sm bg-zinc-900 border border-zinc-800"></span>
-          <span class="w-3 h-3 rounded-sm bg-cyan-950 border border-cyan-800/50"></span>
-          <span class="w-3 h-3 rounded-sm bg-cyan-700"></span>
-          <span class="w-3 h-3 rounded-sm bg-volt-400"></span>
-          <span class="w-3 h-3 rounded-sm bg-hazard-400 shadow-hazard-glow"></span>
-          <span>Apex</span>
-        </div>
-      </div>
-
-      <div class="overflow-x-auto pb-2">
-        <div id="heatmap-matrix" class="flex gap-1.5 min-w-[700px]">
-          <!-- Injected via JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- FIGHT CARDS & RED SEAL ACCREDITATIONS -->
-    <section class="cyber-panel rounded-xl p-4 sm:p-5 space-y-4">
-      <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-        <div class="flex items-center gap-2">
-          <i class="ph-bold ph-medal text-hazard-glow text-lg"></i>
-          <div>
-            <h4 class="text-base font-hud font-bold text-white uppercase tracking-wide">Fight Cards &amp; Accreditations</h4>
-            <p class="text-xs font-mono text-slate-400">Milestones unlocked across trade apprenticeships &amp; fight camps</p>
-          </div>
-        </div>
-        <span id="achievements-count-badge" class="px-2.5 py-1 rounded text-xs font-mono font-bold bg-hazard-500/20 text-hazard-400 border border-hazard-500/40">
-          0 / 8 UNLOCKED
+    <!-- Weekly Day Selector Strip -->
+    <section class="space-y-1.5">
+      <div class="flex justify-between items-center px-1">
+        <span class="text-xs font-mono text-slate-400 uppercase tracking-wider flex items-center space-x-1">
+          <span>📅</span>
+          <span>SCHEDULE SELECTOR</span>
         </span>
+        <button onclick="selectToday()" class="text-[11px] font-mono text-tactical-cyan hover:underline">TODAY</button>
       </div>
 
-      <div id="achievements-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        <!-- Rendered via JS -->
+      <div id="daySelectorStrip" class="grid grid-cols-7 gap-1">
+        <!-- Injected via JavaScript (Mon-Sun) -->
       </div>
     </section>
 
-  </main>
-
-  <!-- FOOTER & DATA CONTROLS -->
-  <footer class="border-t border-zinc-800 bg-zinc-950/90 py-4 text-xs font-mono text-slate-400 mt-6">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div class="flex items-center gap-2 text-center sm:text-left">
-        <span class="inline-block w-2 h-2 rounded-full bg-hazard-500"></span>
-        <span class="text-slate-300 font-bold">VOLT &amp; GLOVE</span>
-        <span class="text-slate-600">|</span>
-        <span>Electrician by Day &bull; Boxer by Night</span>
-      </div>
-
-      <div class="flex items-center gap-3 flex-wrap justify-center">
-        <button id="load-demo-btn" class="hover:text-volt-300 transition underline underline-offset-4">Load Combat Demo</button>
-        <span class="text-slate-700">&bull;</span>
-        <button id="export-json-btn" class="hover:text-hazard-400 transition underline underline-offset-4">Backup JSON</button>
-        <span class="text-slate-700">&bull;</span>
-        <label for="import-file-input" class="hover:text-combat-400 transition cursor-pointer underline underline-offset-4">Restore JSON</label>
-        <input type="file" id="import-file-input" accept=".json" class="hidden" />
-      </div>
-    </div>
-  </footer>
-
-  <!-- ==================== MODALS ==================== -->
-
-  <!-- MODAL 1: PHONE SYNC & PWA INSTALL GUIDE -->
-  <div id="phone-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md hidden opacity-0 transition-opacity duration-200">
-    <div class="cyber-panel bg-zinc-950 border border-cyan-500/80 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl p-5 space-y-4">
-      
-      <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-        <div class="flex items-center gap-2">
-          <i class="ph-bold ph-device-mobile text-volt-300 text-xl"></i>
-          <h3 class="font-hud font-bold text-lg text-white uppercase tracking-wider">Install on Phone (Standalone App)</h3>
+    <!-- Active Day Protocols -->
+    <section class="space-y-3">
+      <div class="flex justify-between items-center px-1">
+        <div>
+          <h2 id="activeDayHeading" class="text-sm font-heading font-bold text-white tracking-wider uppercase">Today's Protocols</h2>
+          <span id="activeDaySub" class="text-[11px] font-mono text-tactical-dim">Active targets for selected day</span>
         </div>
-        <button id="close-phone-modal-btn" class="p-1 rounded-lg text-slate-400 hover:text-white transition">
-          <i class="ph-bold ph-x text-lg"></i>
+        <button onclick="openCreateModal()" class="px-2.5 py-1 rounded bg-tactical-cyan/10 border border-tactical-cyan/40 text-tactical-cyan font-mono text-xs hover:bg-tactical-cyan/20 transition flex items-center space-x-1">
+          <span class="text-base leading-none">+</span>
+          <span>NEW PROTOCOL</span>
         </button>
       </div>
 
-      <div class="space-y-3 text-xs font-mono text-slate-300 leading-relaxed">
-        <div class="p-3 rounded-xl bg-zinc-900 border border-zinc-800 space-y-2">
-          <div class="text-hazard-400 font-bold uppercase flex items-center gap-1.5 text-sm">
-            <i class="ph-bold ph-lightning"></i> Instant Access from your Phone
-          </div>
-          <p>This application is 100% self-contained in this single file. You can install it straight to your home screen so it runs full-screen with offline caching.</p>
-        </div>
+      <!-- Protocol Checklist Container -->
+      <div id="protocolList" class="space-y-2">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
 
-        <div class="space-y-2">
-          <div class="font-bold text-white uppercase text-xs flex items-center gap-1.5">
-            <span class="w-5 h-5 rounded-full bg-volt-400 text-zinc-950 flex items-center justify-center font-bold text-[10px]">1</span>
-            Host for Free (Takes 30 seconds):
-          </div>
-          <p class="text-slate-400 pl-6">
-            Drag and drop this file to <span class="text-volt-300 font-bold">app.netlify.com/drop</span> or upload it to <span class="text-volt-300 font-bold">GitHub Pages</span>. You'll get an instant web link (e.g. <code>https://your-name.netlify.app</code>).
-          </p>
-
-          <div class="font-bold text-white uppercase text-xs flex items-center gap-1.5 pt-1">
-            <span class="w-5 h-5 rounded-full bg-hazard-400 text-zinc-950 flex items-center justify-center font-bold text-[10px]">2</span>
-            Add to Home Screen:
-          </div>
-          <ul class="space-y-1 text-slate-400 pl-6 list-disc list-inside">
-            <li><strong class="text-slate-200">iPhone (Safari):</strong> Tap the <i class="ph-bold ph-share-network text-volt-300"></i> Share button &rarr; tap <strong class="text-slate-200">"Add to Home Screen"</strong>.</li>
-            <li><strong class="text-slate-200">Android (Chrome):</strong> Tap the <i class="ph-bold ph-dots-three-vertical text-volt-300"></i> three-dot menu &rarr; tap <strong class="text-slate-200">"Add to Home screen"</strong> or "Install".</li>
-          </ul>
-
-          <div class="font-bold text-white uppercase text-xs flex items-center gap-1.5 pt-1">
-            <span class="w-5 h-5 rounded-full bg-emerald-400 text-zinc-950 flex items-center justify-center font-bold text-[10px]">3</span>
-            Offline &amp; Permanent:
-          </div>
-          <p class="text-slate-400 pl-6">
-            All your daily ticks, boxing rounds, and trade hours are safely saved in your phone's storage. Remember to tap <strong class="text-white">"Backup JSON"</strong> occasionally to export your progress.
-          </p>
-        </div>
-
-        <button id="download-html-btn" class="w-full py-2.5 rounded-xl bg-volt-400 hover:bg-volt-300 text-zinc-950 font-bold uppercase tracking-wider text-xs transition shadow-volt-glow flex items-center justify-center gap-2">
-          <i class="ph-bold ph-download-simple text-sm"></i>
-          <span>Save HTML File to Device</span>
+    <!-- Quick Time Puncher -->
+    <section class="hud-box rounded-xl p-3.5 space-y-2.5">
+      <div class="flex justify-between items-center">
+        <span class="text-xs font-mono text-tactical-amber uppercase tracking-wider">// TIME LOG ACCUMULATOR</span>
+        <span class="text-[10px] font-mono text-slate-400">+50 XP / hr</span>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="quickLogTime('Boxing & Conditioning', 1.0)" class="p-2.5 bg-slate-900 border border-slate-800 rounded hover:border-tactical-red text-left transition group">
+          <div class="text-[10px] font-mono text-tactical-red uppercase">🥊 Boxing Session</div>
+          <div class="text-sm font-bold text-slate-200 group-hover:text-white">+1.0 Hour</div>
+        </button>
+        <button onclick="quickLogTime('Site & Trade Study', 1.0)" class="p-2.5 bg-slate-900 border border-slate-800 rounded hover:border-tactical-cyan text-left transition group">
+          <div class="text-[10px] font-mono text-tactical-cyan uppercase">⚡ Trade / Code</div>
+          <div class="text-sm font-bold text-slate-200 group-hover:text-white">+1.0 Hour</div>
         </button>
       </div>
+    </section>
 
-    </div>
+    <!-- 63-Day Discipline Matrix (Heatmap) -->
+    <section class="hud-box rounded-xl p-3.5 space-y-2">
+      <div class="flex justify-between items-center">
+        <span class="text-xs font-mono text-slate-300 uppercase tracking-wider">// 63-DAY CONSISTENCY MATRIX</span>
+        <span class="text-[10px] font-mono text-tactical-dim">9 WEEKS</span>
+      </div>
+      <div id="heatmapGrid" class="grid grid-flow-col grid-rows-7 gap-1 overflow-x-auto py-1 hide-scrollbar">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="flex items-center justify-between text-[10px] font-mono text-slate-500 pt-1">
+        <span>Less Intense</span>
+        <div class="flex space-x-1">
+          <div class="w-2.5 h-2.5 rounded-sm bg-slate-900 border border-slate-800"></div>
+          <div class="w-2.5 h-2.5 rounded-sm bg-emerald-900/60"></div>
+          <div class="w-2.5 h-2.5 rounded-sm bg-emerald-700"></div>
+          <div class="w-2.5 h-2.5 rounded-sm bg-tactical-cyan"></div>
+          <div class="w-2.5 h-2.5 rounded-sm bg-tactical-amber"></div>
+        </div>
+        <span>Peak Grind</span>
+      </div>
+    </section>
+
+    <!-- Backup & Data Controls -->
+    <footer class="pt-2 pb-6 flex justify-between items-center text-xs font-mono text-tactical-dim border-t border-slate-900">
+      <button onclick="exportData()" class="hover:text-tactical-cyan underline">Backup Data (.json)</button>
+      <label class="hover:text-tactical-cyan underline cursor-pointer">
+        Restore Data
+        <input type="file" id="importInput" onchange="importData(event)" class="hidden" accept=".json">
+      </label>
+      <button onclick="resetDefaults()" class="hover:text-tactical-red">Reset Defaults</button>
+    </footer>
+
   </div>
 
-  <!-- MODAL 2: COMBAT ROUND TIMER & SHIFT PUNCH CLOCK -->
-  <div id="punchclock-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md hidden opacity-0 transition-opacity duration-200">
-    <div class="cyber-panel bg-zinc-950 border border-hazard-500/70 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl p-5 space-y-4">
-      
-      <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-        <div class="flex items-center gap-2">
-          <i class="ph-bold ph-timer text-hazard-400 text-xl"></i>
-          <h3 class="font-hud font-bold text-lg text-white uppercase tracking-wider">Combat Round Timer &amp; Punch Clock</h3>
-        </div>
-        <button id="close-punchclock-btn" class="p-1 rounded-lg text-slate-400 hover:text-white transition">
-          <i class="ph-bold ph-x text-lg"></i>
-        </button>
+  <!-- MODAL: Create / Edit Protocol -->
+  <div id="protocolModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="hud-box rounded-xl max-w-sm w-full p-4 space-y-3.5 text-slate-200">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <h3 id="modalTitle" class="font-heading font-bold text-sm tracking-wide text-tactical-cyan uppercase">Configure Protocol</h3>
+        <button onclick="closeModal('protocolModal')" class="text-slate-400 hover:text-white font-mono text-base">&times;</button>
       </div>
 
-      <!-- Mode Selector -->
-      <div class="grid grid-cols-2 gap-2 p-1 bg-zinc-900 rounded-lg border border-zinc-800 font-mono text-xs">
-        <button id="timer-mode-rounds" class="py-2 rounded font-bold uppercase transition bg-combat-500 text-white">
-          3-Min Sparring Rounds
-        </button>
-        <button id="timer-mode-stopwatch" class="py-2 rounded font-bold uppercase transition text-slate-400 hover:text-white">
-          Stopwatch / Shift Log
-        </button>
-      </div>
-
-      <!-- Timer Display -->
-      <div id="timer-card-wrapper" class="p-5 sm:p-6 rounded-xl bg-zinc-900/90 border border-zinc-800 text-center relative overflow-hidden transition-colors">
-        <div id="round-indicator" class="text-xs font-mono uppercase tracking-widest text-hazard-400 mb-1">
-          ROUND 1 // 3:00 WORK (10s WARNING BELL)
-        </div>
-        <div id="timer-display" class="font-mono text-5xl sm:text-6xl font-black tracking-tight text-white drop-shadow">
-          03:00
-        </div>
-        <div id="timer-state-label" class="text-xs font-mono text-slate-400 mt-1 uppercase">
-          CLOCK ARMED // READY FOR BELL
-        </div>
-      </div>
-
-      <!-- Controls -->
-      <div class="flex items-center justify-center gap-2 sm:gap-3">
-        <button id="timer-start-btn" class="px-6 py-2.5 rounded-xl bg-volt-400 hover:bg-volt-300 text-zinc-950 font-bold uppercase tracking-wider text-xs transition shadow-volt-glow active:scale-95">
-          Start Bell
-        </button>
-        <button id="timer-pause-btn" class="px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold uppercase tracking-wider text-xs transition">
-          Pause
-        </button>
-        <button id="timer-reset-btn" class="px-5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-700 text-slate-300 hover:text-white font-bold uppercase tracking-wider text-xs transition">
-          Reset
-        </button>
-      </div>
-
-      <!-- Commit Session Hours -->
-      <div class="pt-3 border-t border-zinc-800 space-y-3">
-        <h5 class="text-xs font-mono font-bold text-slate-300 uppercase">// COMMIT SESSION TIME TO RECORD</h5>
-        
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-[10px] font-mono uppercase text-slate-400 mb-1">Domain Pillar</label>
-            <select id="log-category-select" class="w-full px-3 py-2 text-xs font-mono bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-volt-400">
-              <option value="Boxing">Boxing / Sparring / Bag</option>
-              <option value="Conditioning">Roadwork &amp; Sprints</option>
-              <option value="Electrical">Electrical Trade Shift</option>
-              <option value="Theory">Code Book &amp; Blueprint Study</option>
-              <option value="Recovery">Mobility &amp; Muscle Recovery</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-[10px] font-mono uppercase text-slate-400 mb-1">Hours Logged</label>
-            <input id="log-duration-input" type="number" step="0.1" min="0.1" max="24" value="1.0" class="w-full px-3 py-2 text-xs font-mono bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-volt-400" />
-          </div>
+      <div class="space-y-3 text-xs font-mono">
+        <div>
+          <label class="text-[10px] text-slate-400 block mb-1 uppercase">Protocol Name</label>
+          <input type="text" id="protoName" placeholder="e.g. 5K Seawall Interval Sprints" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white focus:border-tactical-cyan focus:outline-none">
         </div>
 
         <div>
-          <label class="block text-[10px] font-mono uppercase text-slate-400 mb-1">Session Debrief / Note</label>
-          <input id="log-note-input" type="text" placeholder="e.g. 8 rounds sparring with southpaw, bent 1-inch EMT offsets, CEC Sec 28 motor calc" class="w-full px-3 py-2 text-xs font-mono bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-volt-400" />
-        </div>
-
-        <button id="commit-time-log-btn" class="w-full py-2.5 rounded-xl bg-hazard-500 hover:bg-hazard-400 text-zinc-950 font-bold uppercase tracking-wider text-xs transition shadow-hazard-glow">
-          Commit to Log &amp; Claim XP
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- MODAL 3: ADD / EDIT DIRECTIVE -->
-  <div id="quest-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md hidden opacity-0 transition-opacity duration-200">
-    <div class="cyber-panel bg-zinc-950 border border-volt-500/70 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl p-5 space-y-4">
-      
-      <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-        <div class="flex items-center gap-2">
-          <i class="ph-bold ph-plus-circle text-volt-300 text-xl"></i>
-          <h3 id="quest-modal-title" class="font-hud font-bold text-lg text-white uppercase tracking-wider">Deploy Custom Directive</h3>
-        </div>
-        <button id="close-quest-modal-btn" class="p-1 rounded-lg text-slate-400 hover:text-white transition">
-          <i class="ph-bold ph-x text-lg"></i>
-        </button>
-      </div>
-
-      <form id="new-quest-form" class="space-y-3">
-        <input type="hidden" id="q-edit-id" value="" />
-
-        <div>
-          <label class="block text-[10px] font-mono uppercase text-slate-300 mb-1">Quest Title *</label>
-          <input id="q-title" type="text" required placeholder="e.g. 6 Rounds Heavy Bag, 4-Way Switch Troubleshooting" class="w-full px-3 py-2 text-xs font-mono bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-volt-400" />
+          <label class="text-[10px] text-slate-400 block mb-1 uppercase">Attribute Category</label>
+          <select id="protoCategory" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white focus:border-tactical-cyan focus:outline-none">
+            <option value="boxing">🥊 Boxing & Conditioning</option>
+            <option value="trade">⚡ Trade & Industrial Electrician</option>
+            <option value="discipline">🛡 Discipline & Recovery</option>
+            <option value="mind">🧠 Iron Mind & Strategy</option>
+          </select>
         </div>
 
         <div>
-          <label class="block text-[10px] font-mono uppercase text-slate-300 mb-1">Operational Description</label>
-          <input id="q-desc" type="text" placeholder="e.g. Double jab-hook exit, calculate branch circuit voltage drop" class="w-full px-3 py-2 text-xs font-mono bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-volt-400" />
+          <label class="text-[10px] text-slate-400 block mb-1 uppercase">XP Yield Upon Completion</label>
+          <div class="grid grid-cols-4 gap-1.5">
+            <button type="button" onclick="setXpOption(15)" class="xp-btn py-1.5 rounded bg-slate-900 border border-slate-800 text-center hover:border-tactical-cyan" data-xp="15">+15</button>
+            <button type="button" onclick="setXpOption(25)" class="xp-btn py-1.5 rounded bg-slate-900 border border-slate-800 text-center hover:border-tactical-cyan" data-xp="25">+25</button>
+            <button type="button" onclick="setXpOption(40)" class="xp-btn py-1.5 rounded bg-slate-900 border border-slate-800 text-center hover:border-tactical-cyan" data-xp="40">+40</button>
+            <button type="button" onclick="setXpOption(60)" class="xp-btn py-1.5 rounded bg-slate-900 border border-slate-800 text-center hover:border-tactical-cyan" data-xp="60">+60</button>
+          </div>
+          <input type="hidden" id="protoXp" value="25">
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-[10px] font-mono uppercase text-slate-300 mb-1">Domain Pillar</label>
-            <select id="q-category" class="w-full px-3 py-2 text-xs font-mono bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-volt-400">
-              <option value="Boxing">Boxing / Combat</option>
-              <option value="Trade">Electrical Tradecraft</option>
-              <option value="Recovery">Recovery &amp; Fuel</option>
-              <option value="Mind">Iron Mind &amp; Study</option>
-            </select>
+        <!-- Day of the Week Toggles -->
+        <div>
+          <label class="text-[10px] text-slate-400 block mb-1 uppercase">Active Schedule Days</label>
+          <div class="grid grid-cols-7 gap-1 text-center font-bold">
+            <button type="button" onclick="toggleScheduleDay(1)" id="dayBtn-1" class="day-sched-btn py-2 rounded bg-slate-900 border border-slate-800">M</button>
+            <button type="button" onclick="toggleScheduleDay(2)" id="dayBtn-2" class="day-sched-btn py-2 rounded bg-slate-900 border border-slate-800">T</button>
+            <button type="button" onclick="toggleScheduleDay(3)" id="dayBtn-3" class="day-sched-btn py-2 rounded bg-slate-900 border border-slate-800">W</button>
+            <button type="button" onclick="toggleScheduleDay(4)" id="dayBtn-4" class="day-sched-btn py-2 rounded bg-slate-900 border border-slate-800">T</button>
+            <button type="button" onclick="toggleScheduleDay(5)" id="dayBtn-5" class="day-sched-btn py-2 rounded bg-slate-900 border border-slate-800">F</button>
+            <button type="button" onclick="toggleScheduleDay(6)" id="dayBtn-6" class="day-sched-btn py-2 rounded bg-slate-900 border border-slate-800">S</button>
+            <button type="button" onclick="toggleScheduleDay(0)" id="dayBtn-0" class="day-sched-btn py-2 rounded bg-slate-900 border border-slate-800">S</button>
           </div>
-          <div>
-            <label class="block text-[10px] font-mono uppercase text-slate-300 mb-1">XP Bounty (10 - 60)</label>
-            <input id="q-xp" type="number" min="10" max="60" value="25" class="w-full px-3 py-2 text-xs font-mono bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-volt-400" />
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-[10px] font-mono uppercase text-slate-300 mb-1">Attribute Boosted</label>
-            <select id="q-stat" class="w-full px-3 py-2 text-xs font-mono bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-volt-400">
-              <option value="str">Strength &amp; Boxing</option>
-              <option value="craft">Craft &amp; Engineering</option>
-              <option value="recov">Discipline &amp; Recovery</option>
-              <option value="mind">Iron Mind</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-[10px] font-mono uppercase text-slate-300 mb-1">Estimated Minutes</label>
-            <input id="q-time" type="number" min="5" max="360" value="30" class="w-full px-3 py-2 text-xs font-mono bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-volt-400" />
+          <div class="flex justify-between mt-1 text-[10px] text-tactical-dim">
+            <button type="button" onclick="selectPresetDays('everyday')" class="hover:text-tactical-cyan">Every Day</button>
+            <button type="button" onclick="selectPresetDays('weekdays')" class="hover:text-tactical-cyan">Weekdays</button>
+            <button type="button" onclick="selectPresetDays('fight')" class="hover:text-tactical-cyan">Fight (M/W/F/Sa)</button>
           </div>
         </div>
+      </div>
 
-        <div class="flex items-center justify-end gap-2 pt-3 border-t border-zinc-800">
-          <button type="button" id="cancel-quest-btn" class="px-4 py-2 rounded-lg text-xs font-mono text-slate-400 hover:text-white transition">
-            Cancel
-          </button>
-          <button type="submit" id="save-quest-btn" class="px-5 py-2 rounded-lg bg-volt-400 hover:bg-volt-300 text-zinc-950 font-bold uppercase font-mono text-xs transition shadow-volt-glow">
-            Deploy Directive
-          </button>
-        </div>
-      </form>
+      <input type="hidden" id="editingProtocolId" value="">
 
+      <div class="flex space-x-2 pt-2 border-t border-slate-800 font-mono">
+        <button id="deleteProtoBtn" type="button" onclick="deleteActiveProtocol()" class="px-3 py-2 rounded bg-red-950/40 border border-red-800 text-red-400 hover:bg-red-900/50 hidden">Delete</button>
+        <button type="button" onclick="saveProtocol()" class="flex-1 py-2 rounded bg-tactical-cyan text-slate-950 font-bold uppercase hover:bg-cyan-400 transition">Save Protocol</button>
+      </div>
     </div>
   </div>
 
-  <!-- MODAL 4: LEVEL UP BANNER -->
-  <div id="levelup-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-lg hidden opacity-0 transition-opacity duration-300">
-    <div class="cyber-panel bg-zinc-950 border-2 border-volt-400 w-full max-w-md rounded-2xl overflow-hidden shadow-volt-glow p-6 text-center space-y-4">
-      <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-volt-500 to-hazard-400 flex items-center justify-center text-zinc-950 text-3xl font-black shadow-lg">
-        <i class="ph-bold ph-lightning"></i>
-      </div>
-      <div>
-        <span class="text-xs font-mono tracking-widest text-hazard-400 uppercase">// APEX PROMOTION</span>
-        <h3 class="text-3xl font-hud font-extrabold text-white uppercase mt-1">LEVEL UP ACHIEVED!</h3>
-        <p class="text-xs font-mono text-slate-300 mt-1">
-          You have reached Level <span id="promoted-level" class="text-volt-300 font-bold text-sm">2</span>
-        </p>
+  <!-- MODAL: Round Timer & Stopwatch -->
+  <div id="timerModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="hud-box rounded-xl max-w-sm w-full p-5 space-y-4 text-center">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <span class="font-heading font-bold text-xs tracking-wider text-tactical-amber uppercase">// COMBAT ROUND TIMER</span>
+        <button onclick="toggleModal('timerModal')" class="text-slate-400 hover:text-white font-mono text-lg">&times;</button>
       </div>
 
-      <div class="p-3 rounded-xl bg-zinc-900 border border-zinc-800 font-mono text-xs text-left space-y-1">
-        <div class="text-slate-400 uppercase text-[10px]">// New Title Granted</div>
-        <div id="promoted-title" class="font-bold text-hazard-400 text-base font-hud uppercase">Golden Gloves Contender</div>
-        <div class="text-[11px] text-slate-300 pt-1">+10 to all core attributes &bull; Increased punch volume &amp; high-voltage endurance</div>
+      <div id="timerStateLabel" class="text-xs font-mono tracking-widest text-tactical-cyan uppercase">ROUND 1 // WORK</div>
+      <div id="timerDisplay" class="text-5xl font-mono font-black tracking-wider text-white my-2">03:00</div>
+
+      <div class="flex justify-center space-x-2 font-mono text-xs">
+        <button id="timerToggleBtn" onclick="toggleTimer()" class="px-6 py-2.5 rounded bg-tactical-cyan text-slate-950 font-bold tracking-wider hover:bg-cyan-400 transition uppercase">START</button>
+        <button onclick="resetTimer()" class="px-4 py-2.5 rounded bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition uppercase">RESET</button>
       </div>
 
-      <button id="close-levelup-btn" class="w-full py-2.5 rounded-xl bg-volt-400 hover:bg-volt-300 text-zinc-950 font-bold uppercase tracking-wider text-xs transition shadow-volt-glow">
-        Acknowledge &amp; Keep Grinding
-      </button>
+      <div class="text-[10px] font-mono text-tactical-dim pt-2 border-t border-slate-800">
+        3:00 Work • 1:00 Rest • 10s Clapper Bell Alert
+      </div>
     </div>
   </div>
 
-  <!-- HUD TOAST NOTIFICATION -->
-  <div id="hud-toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-2.5 px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-700 text-white shadow-2xl font-mono text-xs">
-    <i id="toast-icon" class="ph-bold ph-check text-volt-400 text-base"></i>
-    <span id="toast-msg">Protocol Logged</span>
-  </div>
-
-  <!-- ==================== APEX ENGINE JAVASCRIPT ==================== -->
+  <!-- Application Logic -->
   <script>
-    /* =========================================================
-       DYNAMIC WEB APP MANIFEST INLINE INJECTION
-       ========================================================= */
-    (function injectManifest() {
-      const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"><rect width="512" height="512" rx="100" fill="#06080d"/><path d="M280 64L140 280h100l-40 168 172-224H270z" fill="#00f0ff" stroke="#f59e0b" stroke-width="14"/></svg>`;
-      const iconUrl = 'data:image/svg+xml;base64,' + btoa(iconSvg);
+    // --- Initial Config & State ---
+    const STORAGE_KEY = 'VOLT_GLOVE_V2_DATA';
 
-      const manifest = {
-        name: "Volt & Glove: Apex Protocols",
-        short_name: "Volt&Glove",
-        start_url: window.location.href,
-        display: "standalone",
-        background_color: "#06080d",
-        theme_color: "#06080d",
-        icons: [
-          { src: iconUrl, sizes: "192x192", type: "image/svg+xml" },
-          { src: iconUrl, sizes: "512x512", type: "image/svg+xml" }
-        ]
-      };
-      const stringManifest = JSON.stringify(manifest);
-      const blob = new Blob([stringManifest], {type: 'application/json'});
-      const manifestURL = URL.createObjectURL(blob);
-      const link = document.getElementById('manifest-placeholder');
-      if (link) link.setAttribute('href', manifestURL);
-    })();
-
-    /* =========================================================
-       AUDIO SYNTHESIZER (Synthesized Clapper & Round Bell)
-       ========================================================= */
-    class CyberAudio {
-      constructor() {
-        this.ctx = null;
-        this.muted = false;
-      }
-      init() {
-        if (!this.ctx) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          if (AudioContext) this.ctx = new AudioContext();
-        }
-        if (this.ctx && this.ctx.state === 'suspended') {
-          this.ctx.resume();
-        }
-      }
-      playClick() {
-        if (this.muted) return;
-        this.init();
-        if (!this.ctx) return;
-        try {
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(1200, this.ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(300, this.ctx.currentTime + 0.05);
-          gain.gain.setValueAtTime(0.06, this.ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.05);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start();
-          osc.stop(this.ctx.currentTime + 0.05);
-        } catch(e){}
-      }
-      playSuccess() {
-        if (this.muted) return;
-        this.init();
-        if (!this.ctx) return;
-        try {
-          const now = this.ctx.currentTime;
-          [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, now + i * 0.06);
-            gain.gain.setValueAtTime(0.08, now + i * 0.06);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.15);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(now + i * 0.06);
-            osc.stop(now + i * 0.06 + 0.15);
-          });
-        } catch(e){}
-      }
-      playBell() {
-        if (this.muted) return;
-        this.init();
-        if (!this.ctx) return;
-        try {
-          const now = this.ctx.currentTime;
-          // Dual tone brass fight bell
-          [784, 880].forEach(f => {
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(f, now);
-            osc.frequency.exponentialRampToValueAtTime(f * 0.99, now + 1.2);
-            gain.gain.setValueAtTime(0.25, now);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(now);
-            osc.stop(now + 1.2);
-          });
-        } catch(e){}
-      }
-      playClapper() {
-        // 10-second warning wooden clap
-        if (this.muted) return;
-        this.init();
-        if (!this.ctx) return;
-        try {
-          const now = this.ctx.currentTime;
-          [0, 0.2].forEach(offset => {
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(320, now + offset);
-            osc.frequency.exponentialRampToValueAtTime(80, now + offset + 0.08);
-            gain.gain.setValueAtTime(0.2, now + offset);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.08);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(now + offset);
-            osc.stop(now + offset + 0.08);
-          });
-        } catch(e){}
-      }
-      playLevelUp() {
-        if (this.muted) return;
-        this.init();
-        if (!this.ctx) return;
-        try {
-          const freqs = [392, 523, 659, 784, 1046];
-          const now = this.ctx.currentTime;
-          freqs.forEach((f, idx) => {
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(f, now + idx * 0.09);
-            gain.gain.setValueAtTime(0.12, now + idx * 0.09);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.28);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(now + idx * 0.09);
-            osc.stop(now + idx * 0.09 + 0.3);
-          });
-        } catch(e){}
-      }
-    }
-    const audio = new CyberAudio();
-
-    /* =========================================================
-       CONFIG, PRESET QUESTS & ACHIEVEMENTS
-       ========================================================= */
-    const TITLES = [
-      { level: 1, title: 'Apprentice Sparrer', desc: 'Starting in the gym and roughing in residential circuits' },
-      { level: 2, title: 'Novice Puncher', desc: 'Footwork agility, clean 90-degree pipe bends' },
-      { level: 3, title: 'Electric Journeyman', desc: 'Commercial wiring & 4-round ring conditioning' },
-      { level: 4, title: 'Golden Gloves Contender', desc: 'Fast counters, mastering industrial transformer feeds' },
-      { level: 5, title: 'Master Electrician / Apex Fighter', desc: 'Licensed Master of the High Voltage & Boxing Champion' }
+    // Default Starting Protocols (Fully editable by user)
+    const DEFAULT_PROTOCOLS = [
+      { id: 'p1', name: 'Boxing Technical Sparring / Mitt Drills', category: 'boxing', xp: 40, days: [1, 3, 5, 6] }, // Mon, Wed, Fri, Sat
+      { id: 'p2', name: 'Roadwork Intervals & Conditioning Sprints', category: 'boxing', xp: 35, days: [2, 4] },    // Tue, Thu
+      { id: 'p3', name: 'Industrial Electrical Shift / Site Practical', category: 'trade', xp: 50, days: [1, 2, 3, 4, 5] },
+      { id: 'p4', name: 'CEC Code Rules / Blueprint / Motor Controls Review', category: 'trade', xp: 25, days: [1, 3, 0] },
+      { id: 'p5', name: '8 Hours Sleep & Joint Recovery Mobility', category: 'discipline', xp: 20, days: [0, 1, 2, 3, 4, 5, 6] },
+      { id: 'p6', name: 'High-Protein Fueling & Clean Hydration', category: 'discipline', xp: 15, days: [0, 1, 2, 3, 4, 5, 6] }
     ];
 
-    const PRESET_QUESTS = [
-      {
-        id: 'q_box_bag',
-        title: 'Heavy Bag & Mitts: 6 Rounds',
-        desc: 'Focus on snappy jab, pivot footwork, slip-counters',
-        category: 'Boxing',
-        stat: 'str',
-        xp: 35,
-        estTime: 30
-      },
-      {
-        id: 'q_box_road',
-        title: 'Roadwork & Interval Sprints',
-        desc: '5km aerobic base or 8x200m track intervals',
-        category: 'Boxing',
-        stat: 'str',
-        xp: 30,
-        estTime: 35
-      },
-      {
-        id: 'q_trade_code',
-        title: 'Electrical Code (CEC/NEC) Mastery',
-        desc: 'Section 12/28 study, conduit fill calculations, motor schematics',
-        category: 'Trade',
-        stat: 'craft',
-        xp: 30,
-        estTime: 45
-      },
-      {
-        id: 'q_trade_panel',
-        title: 'Industrial Controls / Conduit Craft',
-        desc: 'Clean 90s, offset saddle bends & 3-phase motor wiring',
-        category: 'Trade',
-        stat: 'craft',
-        xp: 35,
-        estTime: 60
-      },
-      {
-        id: 'q_recov_protein',
-        title: 'High-Protein Fueling & Clean Hydration',
-        desc: '1g/lb protein + 4L electrolyte water for muscular repair',
-        category: 'Recovery',
-        stat: 'recov',
-        xp: 20,
-        estTime: 10
-      },
-      {
-        id: 'q_recov_mobility',
-        title: 'Shoulders, Wrists & Joint Bulletproofing',
-        desc: 'Rotator cuff band work, hand/knuckle soak & thoracic mobility',
-        category: 'Recovery',
-        stat: 'recov',
-        xp: 25,
-        estTime: 20
-      },
-      {
-        id: 'q_mind_film',
-        title: 'Boxing Fight Film & Tape Study',
-        desc: 'Analyze Roberto Duran inside infighting or Canelo hooks',
-        category: 'Mind',
-        stat: 'mind',
-        xp: 25,
-        estTime: 30
-      }
-    ];
-
-    const ACHIEVEMENTS = [
-      { id: 'first_bell', name: 'First Bell', desc: 'Clear your first 5 daily directives', icon: 'ph-bell', requirement: (s) => s.totalQuests >= 5 },
-      { id: 'circuit_master', name: 'Circuit Master', desc: 'Log 20+ hours of electrical tradecraft', icon: 'ph-lightning', requirement: (s) => s.tradeHours >= 20 },
-      { id: 'ring_general', name: 'Ring General', desc: 'Log 20+ hours of boxing & sparring', icon: 'ph-boxing-glove', requirement: (s) => s.boxingHours >= 20 },
-      { id: 'unbroken_streak', name: 'Iron Discipline', desc: 'Achieve a 7-day unbroken grind streak', icon: 'ph-fire', requirement: (s) => s.streak >= 7 },
-      { id: 'century_club', name: 'Century Club', desc: 'Log 100 total hours across all domains', icon: 'ph-clock-countdown', requirement: (s) => s.totalHours >= 100 },
-      { id: 'grand_strategist', name: 'Grand Strategist', desc: 'Clear 15 Iron Mind / Study directives', icon: 'ph-brain', requirement: (s) => s.mindQuests >= 15 },
-      { id: 'master_wireman', name: 'Master Wireman', desc: 'Advance character to Level 3 or higher', icon: 'ph-seal-check', requirement: (s) => s.level >= 3 },
-      { id: 'apex_legend', name: 'Apex Fighter-Tradesman', desc: 'Maintain a 30-day unbroken streak', icon: 'ph-trophy', requirement: (s) => s.streak >= 30 }
-    ];
-
-    /* =========================================================
-       STATE MANAGEMENT
-       ========================================================= */
     let state = {
-      user: {
-        level: 1,
-        xp: 35,
-        stats: { str: 40, craft: 35, recov: 20, mind: 15 }
-      },
-      quests: [...PRESET_QUESTS],
-      completions: {}, // { "YYYY-MM-DD": { [questId]: true } }
-      timeLogs: [],
-      unlockedAchievements: []
+      protocols: [],
+      completions: {}, // { 'YYYY-MM-DD': ['p1', 'p2'] }
+      totalHours: 0,
+      soundEnabled: true,
+      lastStreakDate: null,
+      selectedDate: getTodayString()
     };
 
-    let selectedDate = new Date();
-    let currentCategoryFilter = 'All';
+    let selectedScheduleDays = [0, 1, 2, 3, 4, 5, 6];
 
-    function getISODate(d) {
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
+    // --- Audio Synthesis Engine ---
+    let audioCtx = null;
+    function getAudioContext() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
     }
 
-    function loadSavedState() {
+    function playTone(freq, type, duration, delay = 0) {
+      if (!state.soundEnabled) return;
       try {
-        const raw = localStorage.getItem('volt_glove_pwa_state');
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          state = { ...state, ...parsed };
+        const ctx = getAudioContext();
+        setTimeout(() => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          gain.gain.setValueAtTime(0.12, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + duration);
+        }, delay * 1000);
+      } catch (e) {}
+    }
+
+    function soundCheck() { playTone(880, 'sine', 0.15); }
+    function soundBell() {
+      playTone(659, 'triangle', 0.8, 0);
+      playTone(659, 'triangle', 0.8, 0.12);
+    }
+    function soundLevelUp() {
+      [440, 554, 659, 880].forEach((f, i) => playTone(f, 'sine', 0.25, i * 0.1));
+    }
+
+    function toggleAudio() {
+      state.soundEnabled = !state.soundEnabled;
+      document.getElementById('soundIcon').style.opacity = state.soundEnabled ? '1' : '0.3';
+      saveState();
+    }
+
+    // --- Date Utilities ---
+    function getTodayString() {
+      const d = new Date();
+      return d.toISOString().split('T')[0];
+    }
+
+    function getDayIndex(dateStr) {
+      const parts = dateStr.split('-');
+      const d = new Date(parts[0], parts[1] - 1, parts[2]);
+      return d.getDay(); // 0 is Sun, 1 is Mon...
+    }
+
+    // --- State Initialization ---
+    function loadState() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        try {
+          state = Object.assign(state, JSON.parse(raw));
+        } catch (e) {
+          state.protocols = DEFAULT_PROTOCOLS;
         }
-      } catch (err) {
-        console.error("Storage error:", err);
+      } else {
+        state.protocols = DEFAULT_PROTOCOLS;
       }
-    }
-
-    function persistState() {
-      try {
-        localStorage.setItem('volt_glove_pwa_state', JSON.stringify(state));
-      } catch(e) {
-        console.error("Save error:", e);
+      if (!state.protocols || state.protocols.length === 0) {
+        state.protocols = DEFAULT_PROTOCOLS;
       }
+      state.selectedDate = getTodayString();
+      saveState();
+      renderAll();
     }
 
-    /* =========================================================
-       LEVELING & METRICS ENGINE
-       ========================================================= */
-    function getLevelThreshold(lvl) {
-      return lvl * 180;
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
 
-    function checkLevelProgression() {
-      let threshold = getLevelThreshold(state.user.level);
-      let leveledUp = false;
-
-      while (state.user.xp >= threshold) {
-        state.user.xp -= threshold;
-        state.user.level += 1;
-        leveledUp = true;
-        threshold = getLevelThreshold(state.user.level);
+    // --- Rank & XP Calculations ---
+    function calculateTotalXp() {
+      let xp = 0;
+      // XP from completed tasks
+      for (const [date, ids] of Object.entries(state.completions)) {
+        ids.forEach(id => {
+          const proto = state.protocols.find(p => p.id === id);
+          if (proto) xp += proto.xp;
+        });
       }
-
-      if (leveledUp) {
-        audio.playLevelUp();
-        triggerConfetti();
-        showLevelUpModal(state.user.level);
-      }
+      // XP from hours logged
+      xp += Math.round(state.totalHours * 50);
+      return xp;
     }
 
-    function getCurrentTitle(level) {
-      const matched = [...TITLES].reverse().find(t => level >= t.level);
-      return matched ? matched.title : 'Apex Master Tradesman-Boxer';
-    }
+    const RANKS = [
+      { level: 1, title: 'Apprentice Sparrer', sub: 'Conduit Bending & Pocket Counters', minXp: 0, maxXp: 180 },
+      { level: 2, title: 'Journeyman Brawler', sub: 'Single Phase Mastery & Heavy Bag Power', minXp: 180, maxXp: 450 },
+      { level: 3, title: 'Golden Gloves Contender', sub: 'Sub-Panel Layouts & Counter-Hook Precision', minXp: 450, maxXp: 900 },
+      { level: 4, title: 'Master Tradesman Slugger', sub: 'Three-Phase Motor Controls & 10-Round Cardio', minXp: 900, maxXp: 1600 },
+      { level: 5, title: 'Apex Operator', sub: 'Master Electrician & Undisputed Champion', minXp: 1600, maxXp: 3000 }
+    ];
 
-    function calculateGlobalStreak() {
-      const today = new Date();
+    function calculateStreak() {
       let streak = 0;
-      let check = new Date(today);
-
-      const todayIso = getISODate(check);
-      const doneToday = state.completions[todayIso] && Object.keys(state.completions[todayIso]).length > 0;
-
-      if (!doneToday) {
-        check.setDate(check.getDate() - 1);
-      }
-
+      let check = new Date();
       while (true) {
-        const iso = getISODate(check);
-        if (state.completions[iso] && Object.keys(state.completions[iso]).length > 0) {
+        const str = check.toISOString().split('T')[0];
+        const done = state.completions[str];
+        if (done && done.length > 0) {
           streak++;
           check.setDate(check.getDate() - 1);
         } else {
+          // If today has 0 completions, check yesterday before breaking
+          if (str === getTodayString()) {
+            check.setDate(check.getDate() - 1);
+            continue;
+          }
           break;
         }
       }
       return streak;
     }
 
-    function getStreakMultiplier() {
-      const streak = calculateGlobalStreak();
-      if (streak >= 14) return 1.5;
-      if (streak >= 7) return 1.25;
-      if (streak >= 3) return 1.1;
-      return 1.0;
+    // --- Render Functions ---
+    function renderAll() {
+      renderProfile();
+      renderDaySelector();
+      renderProtocols();
+      renderHeatmap();
     }
 
-    function getTotalCompletedQuests() {
-      let total = 0;
-      Object.keys(state.completions).forEach(d => {
-        total += Object.keys(state.completions[d] || {}).length;
-      });
-      return total;
-    }
-
-    function getTotalLoggedHours() {
-      return state.timeLogs.reduce((acc, curr) => acc + (parseFloat(curr.hours) || 0), 0);
-    }
-
-    function checkAchievements() {
-      const stats = {
-        totalQuests: getTotalCompletedQuests(),
-        streak: calculateGlobalStreak(),
-        tradeHours: state.timeLogs.filter(l => l.category === 'Electrical' || l.category === 'Theory').reduce((a, b) => a + (parseFloat(b.hours) || 0), 0),
-        boxingHours: state.timeLogs.filter(l => l.category === 'Boxing' || l.category === 'Conditioning').reduce((a, b) => a + (parseFloat(b.hours) || 0), 0),
-        totalHours: getTotalLoggedHours(),
-        level: state.user.level,
-        mindQuests: Object.keys(state.completions).reduce((sum, date) => {
-          const ids = Object.keys(state.completions[date] || {});
-          const count = ids.filter(id => {
-            const q = state.quests.find(item => item.id === id);
-            return q && q.category === 'Mind';
-          }).length;
-          return sum + count;
-        }, 0)
-      };
-
-      ACHIEVEMENTS.forEach(ach => {
-        if (!state.unlockedAchievements.includes(ach.id) && ach.requirement(stats)) {
-          state.unlockedAchievements.push(ach.id);
-          showToast(`Unlocked Medal: ${ach.name}!`);
-          audio.playSuccess();
-        }
-      });
-    }
-
-    /* =========================================================
-       UI RENDERING FUNCTIONS
-       ========================================================= */
-    function renderUserHUD() {
-      const u = state.user;
-      const threshold = getLevelThreshold(u.level);
-      const title = getCurrentTitle(u.level);
-      const multiplier = getStreakMultiplier();
-      const streak = calculateGlobalStreak();
-
-      document.getElementById('char-level').innerText = u.level;
-      document.getElementById('char-level-badge').innerText = u.level;
-      document.getElementById('character-title').innerText = title;
-      document.getElementById('char-xp-cur').innerText = u.xp;
-      document.getElementById('char-xp-next').innerText = threshold;
-
-      const xpPct = Math.min(100, Math.round((u.xp / threshold) * 100));
-      document.getElementById('char-xp-bar').style.width = `${xpPct}%`;
-
-      document.getElementById('hero-streak-count').innerText = `${streak} Days`;
-      document.getElementById('hero-hours-count').innerText = `${getTotalLoggedHours().toFixed(1)}h`;
-      document.getElementById('hero-quests-count').innerText = getTotalCompletedQuests();
-
-      const multBadge = document.getElementById('streak-multiplier-badge');
-      multBadge.innerText = `${multiplier.toFixed(2)}x XP`;
-      if (multiplier > 1.0) {
-        multBadge.className = 'px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-hazard-500 text-zinc-950 border border-hazard-400 shadow-hazard-glow';
-      } else {
-        multBadge.className = 'px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-hazard-500/20 text-hazard-400 border border-hazard-500/50';
+    function renderProfile() {
+      const xp = calculateTotalXp();
+      let rank = RANKS[0];
+      for (let r of RANKS) {
+        if (xp >= r.minXp) rank = r;
       }
 
-      const renderStat = (key, barId, lvlId, ptsId) => {
-        const pts = u.stats[key] || 0;
-        const tier = Math.floor(pts / 100) + 1;
-        const remainder = pts % 100;
-        document.getElementById(lvlId).innerText = tier;
-        document.getElementById(ptsId).innerText = `${pts} XP`;
-        document.getElementById(barId).style.width = `${remainder}%`;
-      };
+      document.getElementById('operatorTitle').textContent = rank.title;
+      document.getElementById('rankSubtitle').textContent = rank.sub;
+      document.getElementById('currentLevel').textContent = rank.level;
 
-      renderStat('str', 'stat-bar-str', 'stat-lvl-str', 'stat-pts-str');
-      renderStat('craft', 'stat-bar-craft', 'stat-lvl-craft', 'stat-pts-craft');
-      renderStat('recov', 'stat-bar-recov', 'stat-lvl-recov', 'stat-pts-recov');
-      renderStat('mind', 'stat-bar-mind', 'stat-lvl-mind', 'stat-pts-mind');
+      const currentLvlXp = xp - rank.minXp;
+      const neededLvlXp = rank.maxXp - rank.minXp;
+      const pct = Math.min(100, Math.round((currentLvlXp / neededLvlXp) * 100));
+
+      document.getElementById('xpNumbers').textContent = `${xp} / ${rank.maxXp} XP`;
+      document.getElementById('xpBarFill').style.width = `${pct}%`;
+
+      const streak = calculateStreak();
+      document.getElementById('statStreak').textContent = `${streak} Days`;
+      document.getElementById('statHours').textContent = `${state.totalHours.toFixed(1)}h`;
+
+      let totalTasks = 0;
+      for (const d in state.completions) {
+        totalTasks += state.completions[d].length;
+      }
+      document.getElementById('statTasks').textContent = totalTasks;
+
+      const mult = streak >= 7 ? '1.50x' : streak >= 3 ? '1.25x' : '1.00x';
+      document.getElementById('streakMultiplier').textContent = `${mult} XP`;
     }
 
-    function renderDateNav() {
-      const todayIso = getISODate(new Date());
-      const selectedIso = getISODate(selectedDate);
-      const heading = document.getElementById('current-day-heading');
-      const sub = document.getElementById('current-day-sub');
+    function renderDaySelector() {
+      const container = document.getElementById('daySelectorStrip');
+      container.innerHTML = '';
+      
+      const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+      const today = new Date();
+      const currentDayOfWeek = today.getDay(); // 0 is Sun
 
-      if (todayIso === selectedIso) {
-        heading.innerText = "TODAY'S COMBAT LOG";
-      } else {
-        heading.innerText = selectedDate.toLocaleDateString(undefined, { weekday: 'long' }).toUpperCase();
-      }
+      // Render Monday (1) to Sunday (0)
+      const weekOrder = [1, 2, 3, 4, 5, 6, 0];
 
-      sub.innerText = `${selectedDate.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })} // LOGBOOK`;
+      weekOrder.forEach(dayIdx => {
+        // Calculate offset date for current week
+        const diff = (dayIdx === 0 ? 7 : dayIdx) - (currentDayOfWeek === 0 ? 7 : currentDayOfWeek);
+        const targetDate = new Date();
+        targetDate.setDate(today.getDate() + diff);
+        const dateStr = targetDate.toISOString().split('T')[0];
 
-      const strip = document.getElementById('week-strip');
-      strip.innerHTML = '';
-      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-      for (let i = -3; i <= 3; i++) {
-        const d = new Date(selectedDate);
-        d.setDate(selectedDate.getDate() + i);
-        const iso = getISODate(d);
-        const isCurrent = iso === selectedIso;
-
-        const count = state.completions[iso] ? Object.keys(state.completions[iso]).length : 0;
-        const isDone = count >= 4;
+        const isSelected = dateStr === state.selectedDate;
+        const isToday = dateStr === getTodayString();
 
         const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = `p-2 rounded-lg text-center font-mono transition relative ${
-          isCurrent 
-            ? 'bg-volt-500/20 border border-volt-400 text-white shadow-volt-glow' 
-            : 'bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-slate-400'
-        }`;
         btn.onclick = () => {
-          audio.playClick();
-          selectedDate = new Date(d);
-          updateAllViews();
+          state.selectedDate = dateStr;
+          renderDaySelector();
+          renderProtocols();
         };
 
+        const activeClasses = isSelected
+          ? 'bg-tactical-cyan text-slate-950 font-bold border-tactical-cyan shadow-sm shadow-tactical-cyan/40'
+          : 'bg-slate-950/80 text-slate-400 border-slate-800 hover:border-slate-700';
+
+        btn.className = `p-2 rounded-lg border text-center transition flex flex-col items-center justify-center ${activeClasses}`;
         btn.innerHTML = `
-          <div class="text-[9px] uppercase tracking-wider ${isCurrent ? 'text-volt-300' : 'text-slate-500'}">${days[d.getDay()]}</div>
-          <div class="text-sm font-bold ${isCurrent ? 'text-white' : 'text-slate-200'}">${d.getDate()}</div>
-          ${isDone ? '<div class="w-1.5 h-1.5 rounded-full bg-hazard-400 mx-auto mt-1"></div>' : '<div class="w-1.5 h-1.5 rounded-full bg-zinc-800 mx-auto mt-1"></div>'}
+          <span class="text-[9px] font-mono leading-none ${isSelected ? 'text-slate-900' : 'text-slate-500'}">${dayNames[dayIdx]}</span>
+          <span class="text-sm font-heading font-bold mt-0.5 leading-none">${targetDate.getDate()}</span>
+          ${isToday ? `<span class="w-1 h-1 rounded-full ${isSelected ? 'bg-slate-950' : 'bg-tactical-amber'} mt-1"></span>` : ''}
         `;
-        strip.appendChild(btn);
-      }
-    }
-
-    function renderCategoryFilters() {
-      const container = document.getElementById('quest-category-filters');
-      const categories = ['All', 'Boxing', 'Trade', 'Recovery', 'Mind'];
-      container.innerHTML = categories.map(cat => {
-        const active = currentCategoryFilter === cat;
-        return `
-          <button onclick="setCategory('${cat}')" class="px-2.5 py-1 rounded text-[11px] uppercase transition ${
-            active 
-              ? 'bg-volt-400 text-zinc-950 font-bold' 
-              : 'bg-zinc-900 border border-zinc-800 text-slate-400 hover:text-white'
-          }">
-            ${cat}
-          </button>
-        `;
-      }).join('');
-    }
-
-    function setCategory(cat) {
-      audio.playClick();
-      currentCategoryFilter = cat;
-      renderCategoryFilters();
-      renderQuests();
-    }
-
-    function renderQuests() {
-      const container = document.getElementById('quests-container');
-      const iso = getISODate(selectedDate);
-      const dayCompletions = state.completions[iso] || {};
-
-      let filtered = state.quests.filter(q => {
-        return currentCategoryFilter === 'All' || q.category === currentCategoryFilter;
+        container.appendChild(btn);
       });
+    }
 
-      const totalToday = state.quests.length;
-      const clearedToday = Object.keys(dayCompletions).length;
-      document.getElementById('quest-completion-pill').innerText = `${clearedToday}/${totalToday} CLEARED`;
+    function renderProtocols() {
+      const container = document.getElementById('protocolList');
+      container.innerHTML = '';
 
-      container.innerHTML = filtered.map(quest => {
-        const isDone = !!dayCompletions[quest.id];
-        const mult = getStreakMultiplier();
-        const effectiveXP = Math.round(quest.xp * mult);
+      const dayIdx = getDayIndex(state.selectedDate);
+      const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      
+      const isToday = state.selectedDate === getTodayString();
+      document.getElementById('activeDayHeading').textContent = isToday ? "Today's Protocols" : `${dayNames[dayIdx]}'s Protocols`;
+      document.getElementById('activeDaySub').textContent = `Date: ${state.selectedDate}`;
 
-        let iconName = 'ph-lightning';
-        let badgeColor = 'text-volt-300 border-volt-400/40 bg-volt-400/10';
-        if (quest.category === 'Boxing') {
-          iconName = 'ph-boxing-glove';
-          badgeColor = 'text-combat-400 border-combat-500/40 bg-combat-500/10';
-        } else if (quest.category === 'Trade') {
-          iconName = 'ph-wrench';
-          badgeColor = 'text-volt-300 border-volt-400/40 bg-volt-400/10';
-        } else if (quest.category === 'Recovery') {
-          iconName = 'ph-shield-check';
-          badgeColor = 'text-emerald-400 border-emerald-500/40 bg-emerald-500/10';
-        } else if (quest.category === 'Mind') {
-          iconName = 'ph-brain';
-          badgeColor = 'text-hazard-400 border-hazard-500/40 bg-hazard-500/10';
-        }
+      // Filter protocols assigned to this day
+      const activeForDay = state.protocols.filter(p => p.days.includes(dayIdx));
+      const completedToday = state.completions[state.selectedDate] || [];
 
-        return `
-          <div class="cyber-panel rounded-xl p-3.5 transition-all duration-200 border ${
-            isDone ? 'border-emerald-500/50 bg-emerald-950/20' : 'border-zinc-800 hover:border-zinc-700'
-          } flex items-center justify-between gap-3">
-            
-            <div class="flex items-center gap-3 min-w-0">
-              <button onclick="toggleQuest('${quest.id}')" class="w-9 h-9 rounded-lg flex-shrink-0 flex items-center justify-center transition-all ${
-                isDone 
-                  ? 'bg-emerald-500 text-zinc-950 shadow-md font-bold' 
-                  : 'bg-zinc-900 border border-zinc-700 hover:border-volt-400 text-slate-500'
-              }">
-                <i class="${isDone ? 'ph-bold ph-check text-lg' : 'ph ph-circle text-lg'}"></i>
-              </button>
-
-              <div class="min-w-0">
-                <div class="flex items-center gap-2 flex-wrap">
-                  <span class="text-xs font-mono uppercase px-2 py-0.5 rounded border ${badgeColor}">
-                    <i class="ph-bold ${iconName}"></i> ${quest.category}
-                  </span>
-                  <span class="text-xs font-mono text-slate-500">${quest.estTime}m</span>
-                </div>
-                <h4 class="text-sm font-hud font-bold text-white tracking-wide mt-0.5 truncate ${isDone ? 'line-through text-slate-400' : ''}">
-                  ${escapeHtml(quest.title)}
-                </h4>
-                <p class="text-[11px] font-mono text-slate-400 truncate">${escapeHtml(quest.desc)}</p>
-              </div>
-            </div>
-
-            <!-- XP Value & Edit/Delete Actions -->
-            <div class="flex flex-col items-end flex-shrink-0 gap-1">
-              <span class="text-xs font-mono font-bold ${isDone ? 'text-emerald-400' : 'text-volt-300'}">
-                +${effectiveXP} XP
-              </span>
-              <div class="flex items-center gap-1.5 opacity-60 hover:opacity-100 transition">
-                <button onclick="editQuest('${quest.id}')" title="Edit Quest" class="text-slate-400 hover:text-volt-300">
-                  <i class="ph-bold ph-pencil-simple text-xs"></i>
-                </button>
-                <button onclick="deleteQuest('${quest.id}')" title="Delete Quest" class="text-slate-400 hover:text-combat-400">
-                  <i class="ph-bold ph-trash text-xs"></i>
-                </button>
-              </div>
-            </div>
-
+      if (activeForDay.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-8 border border-dashed border-slate-800 rounded-xl">
+            <p class="text-xs font-mono text-slate-400">No protocols scheduled for this day.</p>
+            <button onclick="openCreateModal()" class="mt-2 text-xs font-mono text-tactical-cyan underline">+ Add One Now</button>
           </div>
         `;
-      }).join('');
-    }
-
-    function toggleQuest(questId) {
-      const iso = getISODate(selectedDate);
-      if (!state.completions[iso]) state.completions[iso] = {};
-
-      const quest = state.quests.find(q => q.id === questId);
-      if (!quest) return;
-
-      const wasDone = !!state.completions[iso][questId];
-      const mult = getStreakMultiplier();
-      const xpVal = Math.round(quest.xp * mult);
-
-      if (wasDone) {
-        delete state.completions[iso][questId];
-        state.user.xp = Math.max(0, state.user.xp - xpVal);
-        state.user.stats[quest.stat] = Math.max(0, (state.user.stats[quest.stat] || 0) - xpVal);
-        audio.playClick();
-        showToast(`Revoked ${quest.title}`);
-      } else {
-        state.completions[iso][questId] = true;
-        state.user.xp += xpVal;
-        state.user.stats[quest.stat] = (state.user.stats[quest.stat] || 0) + xpVal;
-        audio.playSuccess();
-        showToast(`Cleared: +${xpVal} XP to ${quest.stat.toUpperCase()}!`);
-        checkLevelProgression();
+        return;
       }
 
-      checkAchievements();
-      persistState();
-      updateAllViews();
-    }
+      activeForDay.forEach(proto => {
+        const isDone = completedToday.includes(proto.id);
+        const card = document.createElement('div');
+        
+        const catBadge = {
+          boxing: { label: 'BOXING', color: 'text-tactical-red border-tactical-red/40 bg-tactical-red/10' },
+          trade: { label: 'TRADE', color: 'text-tactical-cyan border-tactical-cyan/40 bg-tactical-cyan/10' },
+          discipline: { label: 'RECOVERY', color: 'text-tactical-emerald border-tactical-emerald/40 bg-tactical-emerald/10' },
+          mind: { label: 'STRATEGY', color: 'text-tactical-amber border-tactical-amber/40 bg-tactical-amber/10' }
+        }[proto.category] || { label: 'TACTICAL', color: 'text-slate-400 border-slate-700 bg-slate-900' };
 
-    function editQuest(questId) {
-      const q = state.quests.find(item => item.id === questId);
-      if (!q) return;
-      document.getElementById('q-edit-id').value = q.id;
-      document.getElementById('q-title').value = q.title;
-      document.getElementById('q-desc').value = q.desc;
-      document.getElementById('q-category').value = q.category;
-      document.getElementById('q-xp').value = q.xp;
-      document.getElementById('q-stat').value = q.stat;
-      document.getElementById('q-time').value = q.estTime;
+        card.className = `p-3 rounded-xl border transition flex items-center justify-between ${
+          isDone 
+            ? 'bg-slate-950/40 border-slate-800/60 opacity-60' 
+            : 'bg-slate-900/90 border-slate-800 hover:border-slate-700'
+        }`;
 
-      document.getElementById('quest-modal-title').innerText = "Edit Directive";
-      document.getElementById('save-quest-btn').innerText = "Update Directive";
-      openModal('quest-modal');
-    }
-
-    function deleteQuest(questId) {
-      audio.playClick();
-      state.quests = state.quests.filter(q => q.id !== questId);
-      persistState();
-      updateAllViews();
-      showToast("Directive Removed");
-    }
-
-    function renderTimeAccounting() {
-      const today = new Date();
-      let boxingHrs = 0;
-      let tradeHrs = 0;
-      let recovHrs = 0;
-
-      for (let i = 0; i < 7; i++) {
-        const d = new Date(today);
-        d.setDate(today.getDate() - i);
-        const iso = getISODate(d);
-
-        const logs = state.timeLogs.filter(l => l.date === iso);
-        logs.forEach(l => {
-          const val = parseFloat(l.hours) || 0;
-          if (l.category === 'Boxing' || l.category === 'Conditioning') boxingHrs += val;
-          else if (l.category === 'Electrical') tradeHrs += val;
-          else recovHrs += val;
-        });
-      }
-
-      const total = boxingHrs + tradeHrs + recovHrs;
-      document.getElementById('weekly-total-hours').innerText = `${total.toFixed(1)}h Total (7d)`;
-
-      const boxingPct = total > 0 ? Math.round((boxingHrs / total) * 100) : 0;
-      const tradePct = total > 0 ? Math.round((tradeHrs / total) * 100) : 0;
-      const recovPct = total > 0 ? Math.round((recovHrs / total) * 100) : 0;
-
-      document.getElementById('time-pct-boxing').innerText = `${boxingHrs.toFixed(1)}h (${boxingPct}%)`;
-      document.getElementById('bar-dist-boxing').style.width = `${boxingPct}%`;
-
-      document.getElementById('time-pct-trade').innerText = `${tradeHrs.toFixed(1)}h (${tradePct}%)`;
-      document.getElementById('bar-dist-trade').style.width = `${tradePct}%`;
-
-      document.getElementById('time-pct-recovery').innerText = `${recovHrs.toFixed(1)}h (${recovPct}%)`;
-      document.getElementById('bar-dist-recovery').style.width = `${recovPct}%`;
+        card.innerHTML = `
+          <div class="flex items-center space-x-3 flex-1 min-w-0 mr-2" onclick="toggleTask('${proto.id}')">
+            <div class="w-6 h-6 rounded flex items-center justify-center border cursor-pointer transition ${
+              isDone 
+                ? 'bg-tactical-cyan border-tactical-cyan text-slate-950 font-black' 
+                : 'bg-slate-950 border-slate-700 hover:border-tactical-cyan text-transparent'
+            }">
+              ✓
+            </div>
+            <div class="min-w-0 flex-1 cursor-pointer">
+              <div class="flex items-center space-x-1.5 mb-0.5">
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded border ${catBadge.color}">${catBadge.label}</span>
+                <span class="text-[10px] font-mono text-tactical-amber font-bold">+${proto.xp} XP</span>
+              </div>
+              <p class="text-sm font-heading font-semibold text-slate-200 truncate ${isDone ? 'line-through text-slate-500' : ''}">
+                ${proto.name}
+              </p>
+            </div>
+          </div>
+          <button onclick="editProtocol('${proto.id}')" class="p-1.5 text-slate-500 hover:text-slate-300 transition">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          </button>
+        `;
+        container.appendChild(card);
+      });
     }
 
     function renderHeatmap() {
-      const container = document.getElementById('heatmap-matrix');
-      container.innerHTML = '';
-
-      const totalDays = 70;
+      const grid = document.getElementById('heatmapGrid');
+      grid.innerHTML = '';
       const today = new Date();
-      const start = new Date(today);
-      start.setDate(today.getDate() - (totalDays - 1));
 
-      const weeks = [];
-      let curWeek = [];
+      // 63 days total (9 columns x 7 days)
+      for (let i = 62; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(today.getDate() - i);
+        const str = d.toISOString().split('T')[0];
+        const count = (state.completions[str] || []).length;
 
-      for (let i = 0; i < totalDays; i++) {
-        const d = new Date(start);
-        d.setDate(start.getDate() + i);
-        curWeek.push(d);
+        let bg = 'bg-slate-900 border border-slate-800';
+        if (count >= 5) bg = 'bg-tactical-amber';
+        else if (count >= 3) bg = 'bg-tactical-cyan';
+        else if (count >= 2) bg = 'bg-emerald-600';
+        else if (count >= 1) bg = 'bg-emerald-950 border border-emerald-800';
 
-        if (curWeek.length === 7 || i === totalDays - 1) {
-          weeks.push([...curWeek]);
-          curWeek = [];
+        const dot = document.createElement('div');
+        dot.className = `w-3 h-3 rounded-sm ${bg} transition cursor-pointer`;
+        dot.title = `${str}: ${count} completed`;
+        dot.onclick = () => {
+          state.selectedDate = str;
+          renderDaySelector();
+          renderProtocols();
+        };
+        grid.appendChild(dot);
+      }
+    }
+
+    // --- Action Handlers ---
+    function selectToday() {
+      state.selectedDate = getTodayString();
+      renderDaySelector();
+      renderProtocols();
+    }
+
+    function toggleTask(id) {
+      if (!state.completions[state.selectedDate]) {
+        state.completions[state.selectedDate] = [];
+      }
+      const list = state.completions[state.selectedDate];
+      const idx = list.indexOf(id);
+
+      if (idx > -1) {
+        list.splice(idx, 1);
+      } else {
+        list.push(id);
+        soundCheck();
+
+        // Check if all active tasks are complete for confetti celebration
+        const dayIdx = getDayIndex(state.selectedDate);
+        const activeForDay = state.protocols.filter(p => p.days.includes(dayIdx));
+        if (list.length >= activeForDay.length && activeForDay.length > 0) {
+          confetti({ particleCount: 60, spread: 60, origin: { y: 0.7 } });
+          soundLevelUp();
         }
       }
 
-      weeks.forEach(week => {
-        const col = document.createElement('div');
-        col.className = 'flex flex-col gap-1.5 flex-1';
+      saveState();
+      renderAll();
+    }
 
-        week.forEach(day => {
-          const iso = getISODate(day);
-          const questCount = state.completions[iso] ? Object.keys(state.completions[iso]).length : 0;
-          const dayHours = state.timeLogs
-            .filter(l => l.date === iso)
-            .reduce((s, c) => s + (parseFloat(c.hours) || 0), 0);
+    function quickLogTime(category, hours) {
+      state.totalHours += hours;
+      soundCheck();
+      confetti({ particleCount: 30, spread: 45, origin: { y: 0.8 } });
+      saveState();
+      renderProfile();
+    }
 
-          let bg = 'bg-zinc-900 border border-zinc-800';
-          if (questCount >= 5 || dayHours >= 6) {
-            bg = 'bg-hazard-400 border border-hazard-300 shadow-hazard-glow';
-          } else if (questCount >= 3 || dayHours >= 3) {
-            bg = 'bg-volt-400 border border-cyan-300';
-          } else if (questCount >= 1 || dayHours > 0) {
-            bg = 'bg-cyan-800 border border-cyan-700';
-          }
+    // --- Protocol Customizer Modal Handlers ---
+    function openCreateModal() {
+      document.getElementById('modalTitle').textContent = 'Create Custom Protocol';
+      document.getElementById('editingProtocolId').value = '';
+      document.getElementById('protoName').value = '';
+      document.getElementById('protoCategory').value = 'boxing';
+      document.getElementById('deleteProtoBtn').classList.add('hidden');
+      setXpOption(25);
+      selectedScheduleDays = [0, 1, 2, 3, 4, 5, 6];
+      updateScheduleDayButtons();
+      toggleModal('protocolModal');
+    }
 
-          const cell = document.createElement('div');
-          cell.className = `w-full aspect-square rounded-sm ${bg} cursor-pointer transition hover:scale-125 hover:z-20`;
-          cell.title = `${iso}: ${questCount} quests | ${dayHours.toFixed(1)} hours logged`;
-          cell.onclick = () => {
-            audio.playClick();
-            selectedDate = new Date(day);
-            updateAllViews();
-          };
+    function editProtocol(id) {
+      const proto = state.protocols.find(p => p.id === id);
+      if (!proto) return;
+      document.getElementById('modalTitle').textContent = 'Edit Protocol';
+      document.getElementById('editingProtocolId').value = proto.id;
+      document.getElementById('protoName').value = proto.name;
+      document.getElementById('protoCategory').value = proto.category;
+      document.getElementById('deleteProtoBtn').classList.remove('hidden');
+      setXpOption(proto.xp);
+      selectedScheduleDays = [...proto.days];
+      updateScheduleDayButtons();
+      toggleModal('protocolModal');
+    }
 
-          col.appendChild(cell);
-        });
-
-        container.appendChild(col);
+    function setXpOption(val) {
+      document.getElementById('protoXp').value = val;
+      document.querySelectorAll('.xp-btn').forEach(btn => {
+        if (parseInt(btn.getAttribute('data-xp')) === val) {
+          btn.className = 'xp-btn py-1.5 rounded bg-tactical-cyan text-slate-950 font-bold border border-tactical-cyan';
+        } else {
+          btn.className = 'xp-btn py-1.5 rounded bg-slate-900 border border-slate-800 text-slate-300';
+        }
       });
     }
 
-    function renderAchievements() {
-      const container = document.getElementById('achievements-grid');
-      const unlockedCount = state.unlockedAchievements.length;
-      document.getElementById('achievements-count-badge').innerText = `${unlockedCount} / ${ACHIEVEMENTS.length} UNLOCKED`;
-
-      container.innerHTML = ACHIEVEMENTS.map(ach => {
-        const isUnlocked = state.unlockedAchievements.includes(ach.id);
-        return `
-          <div class="p-3.5 rounded-xl border transition ${
-            isUnlocked 
-              ? 'bg-hazard-500/10 border-hazard-500/60 shadow-hazard-glow' 
-              : 'bg-zinc-950/60 border-zinc-800/80 opacity-60'
-          } flex items-center gap-3">
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 text-xl ${
-              isUnlocked ? 'bg-hazard-500 text-zinc-950 font-bold' : 'bg-zinc-900 text-slate-600 border border-zinc-800'
-            }">
-              <i class="ph-bold ${ach.icon}"></i>
-            </div>
-            <div>
-              <div class="flex items-center gap-1.5">
-                <h5 class="text-xs font-hud font-bold ${isUnlocked ? 'text-white' : 'text-slate-400'} uppercase">${ach.name}</h5>
-                ${isUnlocked ? '<i class="ph-fill ph-seal-check text-hazard-400 text-xs"></i>' : ''}
-              </div>
-              <p class="text-[10px] font-mono text-slate-400 mt-0.5 leading-tight">${ach.desc}</p>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function updateAllViews() {
-      renderUserHUD();
-      renderDateNav();
-      renderQuests();
-      renderTimeAccounting();
-      renderHeatmap();
-      renderAchievements();
-    }
-
-    /* =========================================================
-       COMBAT TIMER & PUNCH CLOCK (With 10s Clapper)
-       ========================================================= */
-    let timerMode = 'rounds'; // 'rounds' or 'stopwatch'
-    let timerInterval = null;
-    let timerSeconds = 0;
-    let isRunning = false;
-
-    let currentRound = 1;
-    let isRoundRest = false;
-    const WORK_DURATION = 180; // 3 minutes
-    const REST_DURATION = 60;  // 1 minute
-    let roundTimeRemaining = WORK_DURATION;
-
-    function formatTime(totalSec) {
-      const h = Math.floor(totalSec / 3600);
-      const m = Math.floor((totalSec % 3600) / 60);
-      const s = totalSec % 60;
-      return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-    }
-
-    function formatMinSec(sec) {
-      const m = Math.floor(sec / 60);
-      const s = sec % 60;
-      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-    }
-
-    function updateTimerUI() {
-      const display = document.getElementById('timer-display');
-      const stateLabel = document.getElementById('timer-state-label');
-      const roundInd = document.getElementById('round-indicator');
-      const card = document.getElementById('timer-card-wrapper');
-
-      if (timerMode === 'stopwatch') {
-        roundInd.classList.add('hidden');
-        display.innerText = formatTime(timerSeconds);
-        stateLabel.innerText = isRunning ? "LOGGING SHIFT / DRILL TIME" : "CLOCK PAUSED";
-        card.className = "p-5 sm:p-6 rounded-xl bg-zinc-900/90 border border-zinc-800 text-center relative overflow-hidden";
+    function toggleScheduleDay(d) {
+      const idx = selectedScheduleDays.indexOf(d);
+      if (idx > -1) {
+        if (selectedScheduleDays.length > 1) selectedScheduleDays.splice(idx, 1);
       } else {
-        roundInd.classList.remove('hidden');
-        display.innerText = formatMinSec(roundTimeRemaining);
-        
-        if (isRoundRest) {
-          roundInd.innerText = `REST PERIOD // PREPARE FOR ROUND ${currentRound + 1}`;
-          stateLabel.innerText = "CATCH BREATH & HYDRATE";
-          card.className = "p-5 sm:p-6 rounded-xl bg-cyan-950/40 border border-cyan-500/50 text-center relative overflow-hidden";
+        selectedScheduleDays.push(d);
+      }
+      updateScheduleDayButtons();
+    }
+
+    function selectPresetDays(preset) {
+      if (preset === 'everyday') selectedScheduleDays = [0, 1, 2, 3, 4, 5, 6];
+      if (preset === 'weekdays') selectedScheduleDays = [1, 2, 3, 4, 5];
+      if (preset === 'fight') selectedScheduleDays = [1, 3, 5, 6];
+      updateScheduleDayButtons();
+    }
+
+    function updateScheduleDayButtons() {
+      [0, 1, 2, 3, 4, 5, 6].forEach(d => {
+        const btn = document.getElementById(`dayBtn-${d}`);
+        if (selectedScheduleDays.includes(d)) {
+          btn.className = 'day-sched-btn py-2 rounded bg-tactical-cyan text-slate-950 font-bold border border-tactical-cyan';
         } else {
-          roundInd.innerText = `ROUND ${currentRound} // WORK HARD IN THE POCKET`;
-          stateLabel.innerText = roundTimeRemaining <= 10 ? "10 SECONDS REMAINING! PUNCH OUT!" : "ACTIVE WORK ROUND";
-          card.className = "p-5 sm:p-6 rounded-xl bg-combat-950/40 border border-combat-500/50 text-center relative overflow-hidden";
+          btn.className = 'day-sched-btn py-2 rounded bg-slate-900 text-slate-500 border border-slate-800';
         }
+      });
+    }
+
+    function saveProtocol() {
+      const name = document.getElementById('protoName').value.trim();
+      if (!name) return alert('Protocol name cannot be blank.');
+      const cat = document.getElementById('protoCategory').value;
+      const xp = parseInt(document.getElementById('protoXp').value) || 25;
+      const editingId = document.getElementById('editingProtocolId').value;
+
+      if (editingId) {
+        const proto = state.protocols.find(p => p.id === editingId);
+        if (proto) {
+          proto.name = name;
+          proto.category = cat;
+          proto.xp = xp;
+          proto.days = [...selectedScheduleDays];
+        }
+      } else {
+        const newId = 'p_' + Date.now();
+        state.protocols.push({
+          id: newId,
+          name,
+          category: cat,
+          xp,
+          days: [...selectedScheduleDays]
+        });
+      }
+
+      saveState();
+      closeModal('protocolModal');
+      renderAll();
+    }
+
+    function deleteActiveProtocol() {
+      const id = document.getElementById('editingProtocolId').value;
+      if (!id) return;
+      if (confirm('Delete this protocol permanently?')) {
+        state.protocols = state.protocols.filter(p => p.id !== id);
+        saveState();
+        closeModal('protocolModal');
+        renderAll();
       }
     }
 
-    function startTimer() {
-      if (isRunning) return;
-      audio.playClick();
-      isRunning = true;
-      document.getElementById('timer-start-btn').innerText = 'Running...';
-      document.getElementById('timer-start-btn').classList.replace('bg-volt-400', 'bg-emerald-500');
+    function toggleModal(id) {
+      document.getElementById(id).classList.toggle('hidden');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
 
-      if (timerMode === 'rounds' && roundTimeRemaining === WORK_DURATION) {
-        audio.playBell();
-      }
+    // --- Round Timer Engine ---
+    let timerInterval = null;
+    let timerRunning = false;
+    let timerSeconds = 180;
+    let timerMode = 'work'; // 'work' or 'rest'
+    let currentRound = 1;
 
-      timerInterval = setInterval(() => {
-        if (timerMode === 'stopwatch') {
-          timerSeconds++;
-        } else {
-          roundTimeRemaining--;
-
-          // 10 second warning clapper
-          if (!isRoundRest && roundTimeRemaining === 10) {
-            audio.playClapper();
-            showToast("10 Seconds! Pick up the volume!");
+    function toggleTimer() {
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        document.getElementById('timerToggleBtn').textContent = 'START';
+      } else {
+        timerRunning = true;
+        document.getElementById('timerToggleBtn').textContent = 'PAUSE';
+        soundBell();
+        timerInterval = setInterval(() => {
+          timerSeconds--;
+          if (timerSeconds === 10) {
+            playTone(400, 'square', 0.1); // 10s clapper warning
           }
-
-          if (roundTimeRemaining <= 0) {
-            audio.playBell();
-            if (!isRoundRest) {
-              isRoundRest = true;
-              roundTimeRemaining = REST_DURATION;
-              showToast("Round Bell! 60s Rest Period");
+          if (timerSeconds <= 0) {
+            soundBell();
+            if (timerMode === 'work') {
+              timerMode = 'rest';
+              timerSeconds = 60;
+              document.getElementById('timerStateLabel').textContent = `ROUND ${currentRound} // REST`;
+              document.getElementById('timerStateLabel').className = 'text-xs font-mono tracking-widest text-tactical-amber uppercase';
             } else {
-              isRoundRest = false;
+              timerMode = 'work';
+              timerSeconds = 180;
               currentRound++;
-              roundTimeRemaining = WORK_DURATION;
-              showToast(`Round ${currentRound}! Fight!`);
+              document.getElementById('timerStateLabel').textContent = `ROUND ${currentRound} // WORK`;
+              document.getElementById('timerStateLabel').className = 'text-xs font-mono tracking-widest text-tactical-cyan uppercase';
             }
           }
-        }
-        updateTimerUI();
-      }, 1000);
-    }
-
-    function pauseTimer() {
-      if (!isRunning) return;
-      audio.playClick();
-      clearInterval(timerInterval);
-      isRunning = false;
-      document.getElementById('timer-start-btn').innerText = 'Resume';
-      document.getElementById('timer-start-btn').classList.replace('bg-emerald-500', 'bg-volt-400');
-      updateTimerUI();
+          updateTimerDisplay();
+        }, 1000);
+      }
     }
 
     function resetTimer() {
-      audio.playClick();
-      pauseTimer();
-      timerSeconds = 0;
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerSeconds = 180;
+      timerMode = 'work';
       currentRound = 1;
-      isRoundRest = false;
-      roundTimeRemaining = WORK_DURATION;
-      document.getElementById('timer-start-btn').innerText = 'Start Bell';
-      updateTimerUI();
+      document.getElementById('timerToggleBtn').textContent = 'START';
+      document.getElementById('timerStateLabel').textContent = `ROUND 1 // WORK`;
+      document.getElementById('timerStateLabel').className = 'text-xs font-mono tracking-widest text-tactical-cyan uppercase';
+      updateTimerDisplay();
     }
 
-    /* =========================================================
-       MODAL CONTROLLERS & TOASTS
-       ========================================================= */
-    function openModal(id) {
-      audio.playClick();
-      const el = document.getElementById(id);
-      el.classList.remove('hidden');
-      setTimeout(() => el.classList.remove('opacity-0'), 10);
+    function updateTimerDisplay() {
+      const m = Math.floor(timerSeconds / 60);
+      const s = timerSeconds % 60;
+      document.getElementById('timerDisplay').textContent = 
+        `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
     }
 
-    function closeModal(id) {
-      audio.playClick();
-      const el = document.getElementById(id);
-      el.classList.add('opacity-0');
-      setTimeout(() => el.classList.add('hidden'), 200);
+    // --- Data Management ---
+    function exportData() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `volt-glove-backup-${getTodayString()}.json`;
+      a.click();
     }
 
-    function showToast(message) {
-      const toast = document.getElementById('hud-toast');
-      document.getElementById('toast-msg').innerText = message;
-      toast.classList.remove('opacity-0', 'translate-y-20');
-      setTimeout(() => {
-        toast.classList.add('opacity-0', 'translate-y-20');
-      }, 2600);
+    function importData(evt) {
+      const file = evt.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported.protocols) {
+            state = imported;
+            saveState();
+            renderAll();
+            alert('Protocols and records restored successfully.');
+          }
+        } catch (err) {
+          alert('Invalid backup file.');
+        }
+      };
+      reader.readAsText(file);
     }
 
-    function showLevelUpModal(lvl) {
-      document.getElementById('promoted-level').innerText = lvl;
-      document.getElementById('promoted-title').innerText = getCurrentTitle(lvl);
-      openModal('levelup-modal');
-    }
-
-    function triggerConfetti() {
-      if (typeof confetti === 'function') {
-        confetti({
-          particleCount: 110,
-          spread: 85,
-          origin: { y: 0.6 },
-          colors: ['#00f0ff', '#f59e0b', '#ef4444', '#10b981']
-        });
+    function resetDefaults() {
+      if (confirm('Reset to default protocol templates? This will refresh your task list.')) {
+        state.protocols = DEFAULT_PROTOCOLS;
+        saveState();
+        renderAll();
       }
     }
 
-    function escapeHtml(text) {
-      if (!text) return '';
-      return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
-
-    /* =========================================================
-       DEMO DATA GENERATION
-       ========================================================= */
-    function injectDemoData() {
-      state.user.level = 2;
-      state.user.xp = 110;
-      state.user.stats = { str: 180, craft: 140, recov: 90, mind: 75 };
-
-      const now = new Date();
-      state.completions = {};
-      state.timeLogs = [];
-
-      for (let i = 0; i < 28; i++) {
-        const d = new Date(now);
-        d.setDate(now.getDate() - i);
-        const iso = getISODate(d);
-        state.completions[iso] = {};
-
-        PRESET_QUESTS.slice(0, 4).forEach(q => {
-          state.completions[iso][q.id] = true;
-        });
-
-        state.timeLogs.push({
-          id: 'log_' + i + '_trade',
-          date: iso,
-          category: 'Electrical',
-          hours: (3.5 + (i % 3)).toFixed(1),
-          note: 'Industrial switchgear wiring & conduit runs'
-        });
-        state.timeLogs.push({
-          id: 'log_' + i + '_box',
-          date: iso,
-          category: 'Boxing',
-          hours: (1.5 + ((i % 2) * 0.5)).toFixed(1),
-          note: '8 rounds sparring & speed bag drills'
-        });
-      }
-
-      checkAchievements();
-      persistState();
-      updateAllViews();
-      showToast("Combat & Electrician Data Loaded!");
-      audio.playSuccess();
-    }
-
-    /* =========================================================
-       EVENT LISTENERS & BINDINGS
-       ========================================================= */
-    function setupEventListeners() {
-      document.getElementById('audio-toggle-btn').addEventListener('click', () => {
-        audio.muted = !audio.muted;
-        const icon = document.getElementById('audio-icon');
-        const lbl = document.getElementById('audio-label');
-        if (audio.muted) {
-          icon.className = 'ph-bold ph-speaker-slash text-slate-500 text-sm';
-          lbl.innerText = 'OFF';
-        } else {
-          audio.playClick();
-          icon.className = 'ph-bold ph-speaker-high text-volt-400 text-sm';
-          lbl.innerText = 'SFX';
-        }
-      });
-
-      // Modals
-      document.getElementById('open-phone-modal-btn').addEventListener('click', () => openModal('phone-modal'));
-      document.getElementById('close-phone-modal-btn').addEventListener('click', () => closeModal('phone-modal'));
-
-      document.getElementById('open-punchclock-btn').addEventListener('click', () => openModal('punchclock-modal'));
-      document.getElementById('close-punchclock-btn').addEventListener('click', () => closeModal('punchclock-modal'));
-
-      document.getElementById('new-quest-modal-btn').addEventListener('click', () => {
-        document.getElementById('new-quest-form').reset();
-        document.getElementById('q-edit-id').value = '';
-        document.getElementById('quest-modal-title').innerText = "Deploy Custom Directive";
-        document.getElementById('save-quest-btn').innerText = "Deploy Directive";
-        openModal('quest-modal');
-      });
-      document.getElementById('close-quest-modal-btn').addEventListener('click', () => closeModal('quest-modal'));
-      document.getElementById('cancel-quest-btn').addEventListener('click', () => closeModal('quest-modal'));
-      document.getElementById('close-levelup-btn').addEventListener('click', () => closeModal('levelup-modal'));
-
-      // Date Stepping
-      document.getElementById('day-prev-btn').addEventListener('click', () => {
-        audio.playClick();
-        selectedDate.setDate(selectedDate.getDate() - 1);
-        updateAllViews();
-      });
-      document.getElementById('day-next-btn').addEventListener('click', () => {
-        audio.playClick();
-        selectedDate.setDate(selectedDate.getDate() + 1);
-        updateAllViews();
-      });
-      document.getElementById('day-today-btn').addEventListener('click', () => {
-        audio.playClick();
-        selectedDate = new Date();
-        updateAllViews();
-      });
-
-      // Timer Modes
-      document.getElementById('timer-mode-rounds').addEventListener('click', () => {
-        audio.playClick();
-        timerMode = 'rounds';
-        document.getElementById('timer-mode-rounds').className = 'py-2 rounded font-bold uppercase transition bg-combat-500 text-white';
-        document.getElementById('timer-mode-stopwatch').className = 'py-2 rounded font-bold uppercase transition text-slate-400 hover:text-white';
-        resetTimer();
-      });
-
-      document.getElementById('timer-mode-stopwatch').addEventListener('click', () => {
-        audio.playClick();
-        timerMode = 'stopwatch';
-        document.getElementById('timer-mode-stopwatch').className = 'py-2 rounded font-bold uppercase transition bg-hazard-500 text-zinc-950';
-        document.getElementById('timer-mode-rounds').className = 'py-2 rounded font-bold uppercase transition text-slate-400 hover:text-white';
-        resetTimer();
-      });
-
-      document.getElementById('timer-start-btn').addEventListener('click', startTimer);
-      document.getElementById('timer-pause-btn').addEventListener('click', pauseTimer);
-      document.getElementById('timer-reset-btn').addEventListener('click', resetTimer);
-
-      // Commit Time Log
-      document.getElementById('commit-time-log-btn').addEventListener('click', () => {
-        const cat = document.getElementById('log-category-select').value;
-        const hrs = parseFloat(document.getElementById('log-duration-input').value) || 1.0;
-        const note = document.getElementById('log-note-input').value.trim() || `${cat} session`;
-
-        const newLog = {
-          id: 'log_' + Date.now(),
-          date: getISODate(selectedDate),
-          category: cat,
-          hours: hrs,
-          note: note
-        };
-
-        state.timeLogs.push(newLog);
-
-        const grantedXP = Math.round(hrs * 20);
-        state.user.xp += grantedXP;
-
-        if (cat === 'Boxing' || cat === 'Conditioning') state.user.stats.str += grantedXP;
-        else if (cat === 'Electrical') state.user.stats.craft += grantedXP;
-        else if (cat === 'Theory') state.user.stats.mind += grantedXP;
-        else state.user.stats.recov += grantedXP;
-
-        audio.playSuccess();
-        showToast(`Logged ${hrs}h ${cat} (+${grantedXP} XP)`);
-        checkLevelProgression();
-        checkAchievements();
-        persistState();
-        updateAllViews();
-        closeModal('punchclock-modal');
-      });
-
-      // Submit Quest Form (Create or Edit)
-      document.getElementById('new-quest-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const editId = document.getElementById('q-edit-id').value;
-        const title = document.getElementById('q-title').value.trim();
-        const desc = document.getElementById('q-desc').value.trim();
-        const cat = document.getElementById('q-category').value;
-        const xp = parseInt(document.getElementById('q-xp').value) || 25;
-        const stat = document.getElementById('q-stat').value;
-        const time = parseInt(document.getElementById('q-time').value) || 30;
-
-        if (editId) {
-          const target = state.quests.find(q => q.id === editId);
-          if (target) {
-            target.title = title;
-            target.desc = desc;
-            target.category = cat;
-            target.xp = xp;
-            target.stat = stat;
-            target.estTime = time;
-            showToast("Directive Updated!");
-          }
-        } else {
-          state.quests.push({
-            id: 'custom_' + Date.now(),
-            title,
-            desc,
-            category: cat,
-            stat,
-            xp,
-            estTime: time
-          });
-          showToast("New Directive Deployed!");
-        }
-
-        persistState();
-        updateAllViews();
-        closeModal('quest-modal');
-        audio.playSuccess();
-      });
-
-      // Save HTML to Device
-      document.getElementById('download-html-btn').addEventListener('click', () => {
-        const html = document.documentElement.outerHTML;
-        const blob = new Blob([html], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'volt-and-glove.html';
-        a.click();
-        URL.revokeObjectURL(url);
-        showToast("HTML saved! Open it in any mobile browser.");
-      });
-
-      // Demo & Backups
-      document.getElementById('load-demo-btn').addEventListener('click', injectDemoData);
-
-      document.getElementById('export-json-btn').addEventListener('click', () => {
-        const json = JSON.stringify(state, null, 2);
-        const blob = new Blob([json], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `volt-glove-backup-${getISODate(new Date())}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-        showToast("Backup JSON file saved!");
-      });
-
-      document.getElementById('import-file-input').addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          try {
-            const parsed = JSON.parse(event.target.result);
-            if (parsed.user && parsed.quests) {
-              state = parsed;
-              persistState();
-              updateAllViews();
-              showToast("Data restored successfully!");
-              audio.playSuccess();
-            } else {
-              showToast("Invalid JSON file");
-            }
-          } catch(err) {
-            showToast("Error parsing backup");
-          }
-        };
-        reader.readAsText(file);
-      });
-    }
-
-    /* =========================================================
-       INITIALIZATION
-       ========================================================= */
-    window.onload = function () {
-      loadSavedState();
-      renderCategoryFilters();
-      setupEventListeners();
-      checkAchievements();
-      updateAllViews();
-      updateTimerUI();
-    };
+    // Launch
+    window.addEventListener('DOMContentLoaded', loadState);
   </script>
 </body>
 </html>
